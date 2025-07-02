@@ -62,7 +62,7 @@ export async function GET(
     );
 
     // Create response with PDF stream
-    const response = new NextResponse(pdfStream as any, {
+    const response = new NextResponse(pdfStream as unknown as ReadableStream, {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="quotation-${quotation.id}.pdf"`,

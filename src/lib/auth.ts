@@ -171,9 +171,9 @@ export class PermissionService {
 
 // Type for API route context
 interface ApiContext {
-  user?: any;
+  user?: UserPayload;
   params?: { [key: string]: string };
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 // Middleware helper for API routes

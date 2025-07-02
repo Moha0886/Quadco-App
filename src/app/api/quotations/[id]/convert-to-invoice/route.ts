@@ -64,9 +64,9 @@ export async function POST(
         await tx.lineItem.create({
           data: {
             invoiceId: newInvoice.id,
-            itemType: (lineItem as any).itemType,
-            productId: (lineItem as any).productId,
-            serviceId: (lineItem as any).serviceId,
+            itemType: lineItem.itemType,
+            productId: lineItem.productId,
+            serviceId: lineItem.serviceId,
             quantity: lineItem.quantity,
             unitPrice: lineItem.unitPrice,
             total: lineItem.total,

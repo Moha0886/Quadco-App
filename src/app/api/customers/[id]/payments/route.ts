@@ -100,7 +100,7 @@ export async function POST(
     }
 
     // Create payment
-    const payment = await (prisma as any).payment.create({
+    const payment = await prisma.payment.create({
       data: {
         invoiceId: body.invoiceId,
         amount: body.amount,
@@ -119,7 +119,7 @@ export async function POST(
     });
 
     // Check if invoice is fully paid and update status
-    const totalPayments = await (prisma as any).payment.aggregate({
+    const totalPayments = await prisma.payment.aggregate({
       where: { invoiceId: body.invoiceId },
       _sum: { amount: true },
     });

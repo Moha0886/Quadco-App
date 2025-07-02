@@ -32,7 +32,7 @@ export async function GET(
     let totalPaid = 0;
     let totalOutstanding = 0;
     let overdueAmount = 0;
-    let invoiceCount = invoices.length;
+    const invoiceCount = invoices.length;
     let paidInvoiceCount = 0;
     let overdueInvoiceCount = 0;
     let totalPaymentDays = 0;

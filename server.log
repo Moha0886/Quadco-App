@@ -844,3 +844,134 @@ prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`,
 prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
  GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 42ms
  GET /dashboard 200 in 54ms
+ ✓ Compiled in 969ms (393 modules)
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 48ms
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 202ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 720ms (894 modules)
+ GET /_next/static/css/app/layout.css?v=1751415512739 404 in 883ms
+ GET /_next/static/css/app/layout.css?v=1751415512752 404 in 840ms
+ ✓ Compiled in 536ms (396 modules)
+ ⨯ Error: Cannot find module './7719.js'
+Require stack:
+- /Users/muhammadilu/quadco-app/.next/server/webpack-runtime.js
+- /Users/muhammadilu/quadco-app/.next/server/app/_not-found/page.js
+- /Users/muhammadilu/quadco-app/node_modules/next/dist/server/require.js
+- /Users/muhammadilu/quadco-app/node_modules/next/dist/server/load-components.js
+- /Users/muhammadilu/quadco-app/node_modules/next/dist/build/utils.js
+- /Users/muhammadilu/quadco-app/node_modules/next/dist/build/swc/options.js
+- /Users/muhammadilu/quadco-app/node_modules/next/dist/build/swc/index.js
+- /Users/muhammadilu/quadco-app/node_modules/next/dist/build/next-config-ts/transpile-config.js
+- /Users/muhammadilu/quadco-app/node_modules/next/dist/server/config.js
+- /Users/muhammadilu/quadco-app/node_modules/next/dist/server/next.js
+- /Users/muhammadilu/quadco-app/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:198:28)
+    at <unknown> (.next/server/webpack-runtime.js:111:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:162:22)
+    at <unknown> (.next/server/app/login/page.js:1:6248)
+    at Object.<anonymous> (.next/server/app/login/page.js:1:6306) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/login'
+}
+ ⨯ Error: Cannot find module './7719.js'
+Require stack:
+- /Users/muhammadilu/quadco-app/.next/server/webpack-runtime.js
+- /Users/muhammadilu/quadco-app/.next/server/app/_not-found/page.js
+- /Users/muhammadilu/quadco-app/node_modules/next/dist/server/require.js
+- /Users/muhammadilu/quadco-app/node_modules/next/dist/server/load-components.js
+- /Users/muhammadilu/quadco-app/node_modules/next/dist/build/utils.js
+- /Users/muhammadilu/quadco-app/node_modules/next/dist/build/swc/options.js
+- /Users/muhammadilu/quadco-app/node_modules/next/dist/build/swc/index.js
+- /Users/muhammadilu/quadco-app/node_modules/next/dist/build/next-config-ts/transpile-config.js
+- /Users/muhammadilu/quadco-app/node_modules/next/dist/server/config.js
+- /Users/muhammadilu/quadco-app/node_modules/next/dist/server/next.js
+- /Users/muhammadilu/quadco-app/node_modules/next/dist/server/lib/start-server.js
+    at __webpack_require__.f.require (.next/server/webpack-runtime.js:198:28)
+    at <unknown> (.next/server/webpack-runtime.js:111:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (.next/server/webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (.next/server/webpack-runtime.js:162:22)
+    at <unknown> (.next/server/app/dashboard/page.js:1:15391)
+    at Object.<anonymous> (.next/server/app/dashboard/page.js:1:15449) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [Array],
+  page: '/dashboard'
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 2.6s (1228 modules)
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 500 in 3081ms
+ GET /dashboard 500 in 3081ms
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 59ms
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 38ms
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 160ms
+ GET /dashboard 200 in 212ms
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 135ms
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /_next/static/css/app/layout.css?v=1751415525982 404 in 372ms
+ GET /_next/static/css/app/layout.css?v=1751415526094 404 in 101ms
+ GET /_next/static/chunks/main-app.js?v=1751415525982 404 in 484ms
+ GET /dashboard 200 in 609ms
+ GET /_next/static/chunks/main-app.js?v=1751415526094 404 in 110ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 108ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 53ms
+ GET /_next/static/chunks/app/login/page.js 404 in 16ms
+ ✓ Compiled in 300ms (643 modules)
+ ✓ Compiled in 226ms (643 modules)
+ ✓ Compiled in 207ms (643 modules)
+ ✓ Compiled in 182ms (643 modules)
+ ✓ Compiled in 169ms (643 modules)
+ ✓ Compiled in 205ms (643 modules)
+ ✓ Compiled in 222ms (642 modules)
+ ✓ Compiled in 144ms (639 modules)
+ ✓ Compiled in 252ms (639 modules)
+ ✓ Compiled in 256ms (639 modules)
+ ✓ Compiled in 151ms (639 modules)
+ ✓ Compiled in 243ms (639 modules)
+ ✓ Compiled in 197ms (639 modules)
+ ✓ Compiled in 198ms (639 modules)
+ ✓ Compiled in 176ms (639 modules)
+ ✓ Compiled in 142ms (639 modules)
+ ✓ Compiled in 224ms (639 modules)
+ ✓ Compiled in 171ms (639 modules)
+ ✓ Compiled in 142ms (639 modules)
+ ✓ Compiled in 310ms (639 modules)
+ ✓ Compiled in 343ms (639 modules)
+ ✓ Compiled in 185ms (639 modules)
+ ✓ Compiled in 230ms (639 modules)

@@ -7,7 +7,7 @@ export const GET = requirePermission('roles', 'read')(async (request: NextReques
   try {
     const { id } = params;
 
-    const role = await (prisma as any).role.findUnique({
+    const role = await prisma.role.findUnique({
       where: { id },
       include: {
         rolePermissions: {

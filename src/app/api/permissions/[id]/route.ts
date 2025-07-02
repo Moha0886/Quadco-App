@@ -30,7 +30,7 @@ export const GET = requirePermission('permissions', 'read')(async (request: Next
 
     const formattedPermission = {
       ...permission,
-      roles: permission.rolePermissions.map((rp: any) => rp.role)
+      roles: permission.rolePermissions.map((rp) => rp.role)
     };
 
     return Response.json(formattedPermission);
@@ -54,7 +54,7 @@ export const PUT = requirePermission('permissions', 'update')(async (request: Ne
     }
 
     // Check if permission exists
-    const existingPermission = await (prisma as any).permission.findUnique({
+    const existingPermission = await prisma.permission.findUnique({
       where: { id }
     });
 
@@ -63,7 +63,7 @@ export const PUT = requirePermission('permissions', 'update')(async (request: Ne
     }
 
     // Check if another permission with this resource and action exists
-    const duplicatePermission = await (prisma as any).permission.findFirst({
+    const duplicatePermission = await prisma.permission.findFirst({
       where: {
         resource: resource.trim(),
         action: action.trim(),
@@ -77,7 +77,7 @@ export const PUT = requirePermission('permissions', 'update')(async (request: Ne
       }, { status: 400 });
     }
 
-    const permission = await (prisma as any).permission.update({
+    const permission = await prisma.permission.update({
       where: { id },
       data: {
         name: name.trim(),
@@ -99,7 +99,7 @@ export const DELETE = requirePermission('permissions', 'delete')(async (request:
   try {
     const { id } = params;
 
-    const permission = await (prisma as any).permission.findUnique({
+    const permission = await prisma.permission.findUnique({
       where: { id },
       include: {
         _count: {
@@ -121,7 +121,7 @@ export const DELETE = requirePermission('permissions', 'delete')(async (request:
       }, { status: 400 });
     }
 
-    await (prisma as any).permission.delete({
+    await prisma.permission.delete({
       where: { id }
     });
 

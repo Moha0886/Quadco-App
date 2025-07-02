@@ -64,7 +64,7 @@ export async function PUT(
     }
 
     // Calculate total from line items
-    const total = lineItems.reduce((sum: number, item: any) => sum + item.total, 0);
+    const total = lineItems.reduce((sum: number, item: { total: number }) => sum + item.total, 0);
 
     // Update invoice with line items in a transaction
     const invoice = await prisma.$transaction(async (tx) => {
@@ -98,7 +98,7 @@ export async function PUT(
             total: item.total,
             description: item.description,
           },
-        } as any);
+        });
       }
 
       return updatedInvoice;

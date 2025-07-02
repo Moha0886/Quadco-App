@@ -93,7 +93,16 @@ export default function EditInvoicePage() {
           status: invoiceData.status,
           notes: invoiceData.notes || "",
         });
-        setLineItems(invoiceData.lineItems.map((item: any) => ({
+        setLineItems(invoiceData.lineItems.map((item: {
+          id: string;
+          itemType: string;
+          productId?: string;
+          serviceId?: string;
+          quantity: number;
+          unitPrice: number;
+          total: number;
+          description?: string;
+        }) => ({
           id: item.id,
           itemType: item.itemType,
           productId: item.productId,
@@ -356,11 +365,11 @@ export default function EditInvoicePage() {
 
             {lineItems.length === 0 ? (
               <div className="text-center py-8 text-gray-500">
-                No items added yet. Click "Add Item" to get started.
+                No items added yet. Click &quot;Add Item&quot; to get started.
               </div>
             ) : (
               <div className="space-y-4">
-                {lineItems.map((item, index) => (
+                {lineItems.map((item) => (
                   <div
                     key={item.id}
                     className="border border-gray-200 rounded-lg p-4"
