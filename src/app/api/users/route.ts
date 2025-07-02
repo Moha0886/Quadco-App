@@ -61,7 +61,7 @@ export const GET = requirePermission('users', 'read')(async (request: NextReques
 
 export const POST = requirePermission('users', 'create')(async (request: NextRequest) => {
   try {
-    const { email, username, firstName, lastName, password, roleIds } = await request.json();
+    const { email, username, firstName, lastName, password, roleIds, isActive = true } = await request.json();
 
     if (!email || !username || !firstName || !lastName || !password) {
       return NextResponse.json(
@@ -96,7 +96,8 @@ export const POST = requirePermission('users', 'create')(async (request: NextReq
         firstName,
         lastName,
         password: hashedPassword,
-        userRoles: roleIds ? {
+        isActive,
+        userRoles: roleIds && roleIds.length > 0 ? {
           create: roleIds.map((roleId: string) => ({
             roleId
           }))
