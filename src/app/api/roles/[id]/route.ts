@@ -38,14 +38,14 @@ export const GET = requirePermission('roles', 'read')(async (request: NextReques
 
     const formattedRole = {
       ...role,
-      permissions: role.rolePermissions.map((rp: any) => ({
+      permissions: role.rolePermissions.map((rp) => ({
         id: rp.permission.id,
         name: rp.permission.name,
         resource: rp.permission.resource,
         action: rp.permission.action,
         description: rp.permission.description
       })),
-      users: role.userRoles.map((ur: any) => ur.user)
+      users: role.userRoles.map((ur) => ur.user)
     };
 
     return Response.json(formattedRole);
@@ -67,7 +67,7 @@ export const PUT = requirePermission('roles', 'update')(async (request: NextRequ
     }
 
     // Check if role exists
-    const existingRole = await (prisma as any).role.findUnique({
+    const existingRole = await prisma.role.findUnique({
       where: { id }
     });
 
@@ -81,7 +81,7 @@ export const PUT = requirePermission('roles', 'update')(async (request: NextRequ
     }
 
     // Check if another role with this name exists
-    const duplicateRole = await (prisma as any).role.findFirst({
+    const duplicateRole = await prisma.role.findFirst({
       where: {
         name: name.trim(),
         id: { not: id }
@@ -93,7 +93,7 @@ export const PUT = requirePermission('roles', 'update')(async (request: NextRequ
     }
 
     // Update role with permissions
-    const role = await (prisma as any).role.update({
+    const role = await prisma.role.update({
       where: { id },
       data: {
         name: name.trim(),
@@ -117,7 +117,7 @@ export const PUT = requirePermission('roles', 'update')(async (request: NextRequ
 
     const formattedRole = {
       ...role,
-      permissions: role.rolePermissions.map((rp: any) => ({
+      permissions: role.rolePermissions.map((rp) => ({
         id: rp.permission.id,
         name: rp.permission.name,
         resource: rp.permission.resource,
@@ -138,7 +138,7 @@ export const DELETE = requirePermission('roles', 'delete')(async (request: NextR
   try {
     const { id } = params;
 
-    const role = await (prisma as any).role.findUnique({
+    const role = await prisma.role.findUnique({
       where: { id },
       include: {
         _count: {
@@ -165,7 +165,7 @@ export const DELETE = requirePermission('roles', 'delete')(async (request: NextR
       }, { status: 400 });
     }
 
-    await (prisma as any).role.delete({
+    await prisma.role.delete({
       where: { id }
     });
 
