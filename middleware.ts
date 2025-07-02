@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 import { AuthService } from './src/lib/auth';
 
 // Routes that don't require authentication
-const publicRoutes = ['/login', '/api/auth/login'];
+const publicRoutes = ['/login', '/api/auth/login', '/api/test'];
 
 // Routes that require authentication
 const protectedRoutes = [
