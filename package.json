@@ -10,7 +10,8 @@
     "postinstall": "prisma generate",
     "db:deploy": "prisma migrate deploy",
     "seed": "tsx scripts/seed.ts && tsx scripts/create-super-admin.ts",
-    "db:setup": "prisma db push && npm run seed"
+    "db:setup": "prisma db push && npm run seed",
+    "db:check": "node check-db.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
