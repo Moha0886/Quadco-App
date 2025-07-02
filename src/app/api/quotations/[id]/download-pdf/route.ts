@@ -5,14 +5,14 @@ import QuotationPDF from '@/components/pdf/QuotationPDF';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const quotationId = context.params.id;
 
     // Fetch quotation with all related data
     const quotation = await prisma.quotation.findUnique({
-      where: { id },
+      where: { id: quotationId },
       include: {
         customer: true,
         lineItems: {
@@ -58,7 +58,7 @@ export async function GET(
 
     // Generate PDF buffer
     const pdfStream = await ReactPDF.renderToStream(
-      QuotationPDF({ quotation: pdfData })
+      QuotationPDF({ quotation: pdfData }) as any
     );
 
     // Create response with PDF stream

@@ -3,10 +3,10 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const quotationId = params.id;
+    const quotationId = context.params.id;
 
     const quotation = await prisma.quotation.findUnique({
       where: { id: quotationId },
@@ -39,10 +39,10 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const quotationId = params.id;
+    const quotationId = context.params.id;
     const body = await request.json();
     const { customerId, validUntil, status, notes, lineItems } = body;
 
@@ -116,10 +116,10 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const quotationId = params.id;
+    const quotationId = context.params.id;
 
     await prisma.quotation.delete({
       where: { id: quotationId },

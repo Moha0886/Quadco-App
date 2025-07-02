@@ -3,10 +3,10 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const quotationId = params.id;
+    const quotationId = context.params.id;
 
     // First, get the quotation with its line items
     const quotation = await prisma.quotation.findUnique({
