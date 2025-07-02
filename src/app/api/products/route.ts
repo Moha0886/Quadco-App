@@ -4,8 +4,9 @@ import { prisma } from "@/lib/prisma";
 export async function GET() {
   try {
     const products = await prisma.product.findMany({
-      orderBy: { name: 'asc' }
+      orderBy: { name: 'asc' },
     });
+
     return NextResponse.json(products);
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -21,6 +22,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { name, description, price, unit, category, stock } = body;
 
+    // Validate required fields
     if (!name || !price || !unit) {
       return NextResponse.json(
         { error: "Name, price, and unit are required" },
@@ -31,12 +33,12 @@ export async function POST(request: NextRequest) {
     const product = await prisma.product.create({
       data: {
         name,
-        description: description || '',
+        description: description || null,
         price: parseFloat(price),
         unit,
-        category: category || '',
-        stock: stock ? parseInt(stock) : 0
-      }
+        category: category || null,
+        stock: stock ? parseInt(stock) : 0,
+      },
     });
 
     return NextResponse.json(product, { status: 201 });
