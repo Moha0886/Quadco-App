@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Plus, Trash2, ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -69,13 +69,7 @@ export default function EditInvoicePage() {
 
   const [lineItems, setLineItems] = useState<LineItem[]>([]);
 
-  useEffect(() => {
-    if (params.id) {
-      fetchData();
-    }
-  }, [params.id]);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const [invoiceRes, customersRes, productsRes, servicesRes] = await Promise.all([
         fetch(`/api/invoices/${params.id}`),
@@ -133,7 +127,13 @@ export default function EditInvoicePage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [params.id]);
+
+  useEffect(() => {
+    if (params.id) {
+      fetchData();
+    }
+  }, [params.id, fetchData]);
 
   const addLineItem = () => {
     const newItem: LineItem = {

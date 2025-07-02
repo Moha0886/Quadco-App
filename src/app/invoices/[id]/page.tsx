@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Edit, Download, Truck, DollarSign, X } from "lucide-react";
 import Link from "next/link";
@@ -84,13 +84,7 @@ export default function InvoiceViewPage() {
     notes: ''
   });
 
-  useEffect(() => {
-    if (params.id) {
-      fetchInvoice(params.id as string);
-    }
-  }, [params.id]);
-
-  const fetchInvoice = async (id: string) => {
+  const fetchInvoice = useCallback(async (id: string) => {
     try {
       const response = await fetch(`/api/invoices/${id}`);
       if (response.ok) {
@@ -113,7 +107,13 @@ export default function InvoiceViewPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [router]);
+
+  useEffect(() => {
+    if (params.id) {
+      fetchInvoice(params.id as string);
+    }
+  }, [params.id, fetchInvoice]);
 
   const getTotalPaid = () => {
     return payments.reduce((sum, payment) => sum + payment.amount, 0);

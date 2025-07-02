@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Save } from "lucide-react";
 import Link from "next/link";
@@ -29,13 +29,7 @@ export default function CustomerEditPage() {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  useEffect(() => {
-    if (params.id) {
-      fetchCustomer(params.id as string);
-    }
-  }, [params.id]);
-
-  const fetchCustomer = async (id: string) => {
+  const fetchCustomer = useCallback(async (id: string) => {
     try {
       const response = await fetch(`/api/customers/${id}`);
       if (!response.ok) {
@@ -56,7 +50,13 @@ export default function CustomerEditPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [router]);
+
+  useEffect(() => {
+    if (params.id) {
+      fetchCustomer(params.id as string);
+    }
+  }, [params.id, fetchCustomer]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;

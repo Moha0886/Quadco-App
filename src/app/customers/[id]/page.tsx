@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Edit, Mail, Phone, MapPin, FileText, DollarSign, Calendar, TrendingUp, TrendingDown } from "lucide-react";
 import Link from "next/link";
@@ -62,13 +62,7 @@ export default function CustomerViewPage() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'overview' | 'invoices' | 'payments'>('overview');
 
-  useEffect(() => {
-    if (params.id) {
-      fetchCustomerData(params.id as string);
-    }
-  }, [params.id]);
-
-  const fetchCustomerData = async (id: string) => {
+  const fetchCustomerData = useCallback(async (id: string) => {
     try {
       setLoading(true);
       
@@ -107,7 +101,13 @@ export default function CustomerViewPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [router]);
+
+  useEffect(() => {
+    if (params.id) {
+      fetchCustomerData(params.id as string);
+    }
+  }, [params.id, fetchCustomerData]);
 
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {

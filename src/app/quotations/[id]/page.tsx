@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Edit, FileSpreadsheet, Download } from "lucide-react";
 import Link from "next/link";
@@ -68,13 +68,7 @@ export default function QuotationViewPage() {
   const [quotation, setQuotation] = useState<Quotation | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (params.id) {
-      fetchQuotation(params.id as string);
-    }
-  }, [params.id]);
-
-  const fetchQuotation = async (id: string) => {
+  const fetchQuotation = useCallback(async (id: string) => {
     try {
       const response = await fetch(`/api/quotations/${id}`);
       if (response.ok) {
@@ -90,7 +84,13 @@ export default function QuotationViewPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [router]);
+
+  useEffect(() => {
+    if (params.id) {
+      fetchQuotation(params.id as string);
+    }
+  }, [params.id, fetchQuotation]);
 
   const convertToInvoice = async () => {
     if (!quotation || !confirm("Are you sure you want to convert this quotation to an invoice?")) {

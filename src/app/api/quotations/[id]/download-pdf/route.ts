@@ -85,17 +85,18 @@ export async function GET(
     };
 
     // Generate PDF buffer
-    const pdfStream = await ReactPDF.renderToStream(
+    const pdfBuffer = await ReactPDF.renderToBuffer(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       QuotationPDF({ quotation: pdfData }) as any
     );
 
-    // Create response with PDF stream
-    const response = new NextResponse(pdfStream as unknown as ReadableStream, {
+    // Create response with PDF buffer
+    const response = new NextResponse(pdfBuffer, {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="quotation-${quotation.id}.pdf"`,
         'Cache-Control': 'no-cache',
+        'Content-Length': pdfBuffer.length.toString(),
       },
     });
 
