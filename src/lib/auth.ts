@@ -172,27 +172,28 @@ export class PermissionService {
 // Type for API route context
 interface ApiContext {
   user?: UserPayload;
-  params?: { [key: string]: string };
+  params?: Promise<{ [key: string]: string }>;
   [key: string]: unknown;
 }
 
 // Middleware helper for API routes
-export function requireAuth(handler: (request: NextRequest, context: ApiContext) => Promise<Response>) {
-  return async (request: NextRequest, context: ApiContext) => {
+export function requireAuth(handler: (request: NextRequest, context?: ApiContext) => Promise<Response>) {
+  return async (request: NextRequest, context?: ApiContext) => {
     const user = await AuthService.getCurrentUser(request);
     if (!user) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     // Add user to context
-    context.user = user;
-    return handler(request, context);
+    const enrichedContext = { ...context, user };
+    return handler(request, enrichedContext);
   };
 }
 
 export function requirePermission(resource: string, action: string) {
-  return function(handler: (request: NextRequest, context: ApiContext) => Promise<Response>) {
-    return async (request: NextRequest, context: ApiContext) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return function<T extends any[]>(handler: (request: NextRequest, ...args: T) => Promise<Response>) {
+    return async (request: NextRequest, ...args: T) => {
       const user = await AuthService.getCurrentUser(request);
       if (!user) {
         return Response.json({ error: 'Unauthorized' }, { status: 401 });
@@ -202,8 +203,13 @@ export function requirePermission(resource: string, action: string) {
         return Response.json({ error: 'Forbidden' }, { status: 403 });
       }
 
-      context.user = user;
-      return handler(request, context);
+      // For routes with context parameter, add user to it
+      if (args.length > 0 && typeof args[0] === 'object' && args[0] !== null) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (args[0] as any).user = user;
+      }
+      
+      return handler(request, ...args);
     };
   };
 }

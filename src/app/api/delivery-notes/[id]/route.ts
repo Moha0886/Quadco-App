@@ -3,10 +3,10 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const deliveryNoteId = context.params.id;
+    const { id: deliveryNoteId } = await params;
 
     const deliveryNote = await prisma.deliveryNote.findUnique({
       where: { id: deliveryNoteId },
@@ -40,10 +40,10 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const deliveryNoteId = params.id;
+    const { id: deliveryNoteId } = await params;
     const body = await request.json();
     const {
       deliveredDate,
@@ -81,10 +81,10 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const deliveryNoteId = params.id;
+    const { id: deliveryNoteId } = await params;
 
     await prisma.deliveryNote.delete({
       where: { id: deliveryNoteId },

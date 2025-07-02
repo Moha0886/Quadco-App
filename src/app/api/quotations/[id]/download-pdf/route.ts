@@ -3,12 +3,40 @@ import ReactPDF from '@react-pdf/renderer';
 import { prisma } from '@/lib/prisma';
 import QuotationPDF from '@/components/pdf/QuotationPDF';
 
+type QuotationData = {
+  id: string;
+  date: string;
+  validUntil: string;
+  status: string;
+  total: number;
+  notes?: string;
+  customer: {
+    name: string;
+    email: string;
+    phone?: string;
+    address?: string;
+  };
+  lineItems: Array<{
+    id: string;
+    description: string;
+    quantity: number;
+    unitPrice: number;
+    total: number;
+    itemType: 'product';
+    product?: {
+      name: string;
+      unit: string;
+    };
+    service: undefined;
+  }>;
+};
+
 export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const quotationId = context.params.id;
+    const { id: quotationId } = await params;
 
     // Fetch quotation with all related data
     const quotation = await prisma.quotation.findUnique({
@@ -28,7 +56,7 @@ export async function GET(
     }
 
     // Transform data for PDF component
-    const pdfData = {
+    const pdfData: QuotationData = {
       id: quotation.id,
       date: quotation.date.toISOString().split('T')[0],
       validUntil: quotation.validUntil.toISOString().split('T')[0],
@@ -58,6 +86,7 @@ export async function GET(
 
     // Generate PDF buffer
     const pdfStream = await ReactPDF.renderToStream(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       QuotationPDF({ quotation: pdfData }) as any
     );
 
