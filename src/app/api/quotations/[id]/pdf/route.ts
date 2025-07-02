@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { renderToBuffer } from '@react-pdf/renderer';
+import React from 'react';
 import { prisma } from '@/lib/prisma';
 import QuotationPDF from '@/components/pdf/QuotationPDF';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = params.id;
+    const resolvedParams = await params;
+    const id = resolvedParams.id;
 
     // Fetch quotation with all related data
     const quotation = await prisma.quotation.findUnique({
@@ -57,7 +59,12 @@ export async function GET(
     };
 
     // Generate PDF buffer
-    const pdfBuffer = await renderToBuffer(QuotationPDF({ quotation: pdfData }));
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore: React-PDF type mismatch - component returns valid Document
+    const pdfBuffer = await renderToBuffer(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      React.createElement(QuotationPDF, { quotation: pdfData }) as any
+    );
     
     // Return PDF with appropriate headers
     return new NextResponse(pdfBuffer, {

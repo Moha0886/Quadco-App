@@ -39,10 +39,11 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const invoiceId = params.id;
+    const resolvedParams = await params;
+    const invoiceId = resolvedParams.id;
     const body = await request.json();
     const { customerId, dueDate, status, notes, lineItems } = body;
 
@@ -116,10 +117,11 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const invoiceId = params.id;
+    const resolvedParams = await params;
+    const invoiceId = resolvedParams.id;
 
     await prisma.invoice.delete({
       where: { id: invoiceId },

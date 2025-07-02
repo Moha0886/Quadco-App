@@ -3,9 +3,10 @@ import { prisma } from '@/lib/prisma';
 import { requirePermission } from '@/lib/auth';
 
 // GET /api/permissions/[id] - Get a specific permission
-export const GET = requirePermission('permissions', 'read')(async (request: NextRequest, { params }: { params: { id: string } }) => {
+export const GET = requirePermission('permissions', 'read')(async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
   try {
-    const { id } = params;
+    const resolvedParams = await params;
+    const { id } = resolvedParams;
 
     const permission = await prisma.permission.findUnique({
       where: { id },
@@ -41,9 +42,10 @@ export const GET = requirePermission('permissions', 'read')(async (request: Next
 });
 
 // PUT /api/permissions/[id] - Update a permission
-export const PUT = requirePermission('permissions', 'update')(async (request: NextRequest, { params }: { params: { id: string } }) => {
+export const PUT = requirePermission('permissions', 'update')(async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
   try {
-    const { id } = params;
+    const resolvedParams = await params;
+    const { id } = resolvedParams;
     const body = await request.json();
     const { name, description, resource, action } = body;
 
@@ -95,9 +97,10 @@ export const PUT = requirePermission('permissions', 'update')(async (request: Ne
 });
 
 // DELETE /api/permissions/[id] - Delete a permission
-export const DELETE = requirePermission('permissions', 'delete')(async (request: NextRequest, { params }: { params: { id: string } }) => {
+export const DELETE = requirePermission('permissions', 'delete')(async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
   try {
-    const { id } = params;
+    const resolvedParams = await params;
+    const { id } = resolvedParams;
 
     const permission = await prisma.permission.findUnique({
       where: { id },

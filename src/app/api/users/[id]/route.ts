@@ -3,9 +3,10 @@ import { prisma } from '@/lib/prisma';
 import { AuthService, requirePermission } from '@/lib/auth';
 
 // GET /api/users/[id] - Get a specific user
-export const GET = requirePermission('users', 'read')(async (request: NextRequest, { params }: { params: { id: string } }) => {
+export const GET = requirePermission('users', 'read')(async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
   try {
-    const { id } = params;
+    const resolvedParams = await params;
+    const { id } = resolvedParams;
 
     const user = await prisma.user.findUnique({
       where: { id },
@@ -49,9 +50,10 @@ export const GET = requirePermission('users', 'read')(async (request: NextReques
 });
 
 // PUT /api/users/[id] - Update a user
-export const PUT = requirePermission('users', 'update')(async (request: NextRequest, { params }: { params: { id: string } }) => {
+export const PUT = requirePermission('users', 'update')(async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
   try {
-    const { id } = params;
+    const resolvedParams = await params;
+    const { id } = resolvedParams;
     const body = await request.json();
     const { email, username, firstName, lastName, password, roleIds, isActive } = body;
 
@@ -129,9 +131,10 @@ export const PUT = requirePermission('users', 'update')(async (request: NextRequ
 });
 
 // DELETE /api/users/[id] - Delete a user
-export const DELETE = requirePermission('users', 'delete')(async (request: NextRequest, { params }: { params: { id: string } }) => {
+export const DELETE = requirePermission('users', 'delete')(async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
   try {
-    const { id } = params;
+    const resolvedParams = await params;
+    const { id } = resolvedParams;
 
     const user = await prisma.user.findUnique({
       where: { id }

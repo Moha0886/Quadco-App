@@ -3,9 +3,10 @@ import { prisma } from '@/lib/prisma';
 import { requirePermission } from '@/lib/auth';
 
 // GET /api/roles/[id] - Get a specific role
-export const GET = requirePermission('roles', 'read')(async (request: NextRequest, { params }: { params: { id: string } }) => {
+export const GET = requirePermission('roles', 'read')(async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
   try {
-    const { id } = params;
+    const resolvedParams = await params;
+    const { id } = resolvedParams;
 
     const role = await prisma.role.findUnique({
       where: { id },
@@ -56,9 +57,10 @@ export const GET = requirePermission('roles', 'read')(async (request: NextReques
 });
 
 // PUT /api/roles/[id] - Update a role
-export const PUT = requirePermission('roles', 'update')(async (request: NextRequest, { params }: { params: { id: string } }) => {
+export const PUT = requirePermission('roles', 'update')(async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
   try {
-    const { id } = params;
+    const resolvedParams = await params;
+    const { id } = resolvedParams;
     const body = await request.json();
     const { name, description, permissionIds } = body;
 
@@ -134,9 +136,10 @@ export const PUT = requirePermission('roles', 'update')(async (request: NextRequ
 });
 
 // DELETE /api/roles/[id] - Delete a role
-export const DELETE = requirePermission('roles', 'delete')(async (request: NextRequest, { params }: { params: { id: string } }) => {
+export const DELETE = requirePermission('roles', 'delete')(async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
   try {
-    const { id } = params;
+    const resolvedParams = await params;
+    const { id } = resolvedParams;
 
     const role = await prisma.role.findUnique({
       where: { id },
