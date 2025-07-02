@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get the user's current password hash
-    const dbUser = await (prisma as any).user.findUnique({
+    const dbUser = await prisma.user.findUnique({
       where: { id: user.id },
       select: { password: true }
     });
@@ -47,13 +47,13 @@ export async function POST(request: NextRequest) {
     const hashedNewPassword = await AuthService.hashPassword(newPassword);
 
     // Update password in database
-    await (prisma as any).user.update({
+    await prisma.user.update({
       where: { id: user.id },
       data: { password: hashedNewPassword }
     });
 
     return Response.json({ message: 'Password changed successfully' });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error changing password:', error);
     return Response.json({ error: 'Internal server error' }, { status: 500 });
   }

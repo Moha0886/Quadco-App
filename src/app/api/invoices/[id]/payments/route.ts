@@ -21,13 +21,13 @@ export async function GET(
     }
 
     // Fetch payments for this invoice
-    const payments = await (prisma as any).payment.findMany({
+    const payments = await prisma.payment.findMany({
       where: { invoiceId },
       orderBy: { paymentDate: "desc" },
     });
 
     // Transform payments
-    const transformedPayments = payments.map((payment: any) => ({
+    const transformedPayments = payments.map((payment) => ({
       id: payment.id,
       amount: payment.amount,
       paymentDate: payment.paymentDate.toISOString(),
@@ -39,7 +39,7 @@ export async function GET(
     }));
 
     return NextResponse.json(transformedPayments);
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error fetching invoice payments:", error);
     return NextResponse.json(
       { error: "Internal server error" },

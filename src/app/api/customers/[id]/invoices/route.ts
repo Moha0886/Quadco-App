@@ -31,14 +31,14 @@ export async function GET(
             id: true,
           },
         },
-      } as any,
+      },
       orderBy: { date: "desc" },
     });
 
     // Transform invoices to include computed fields
-    const transformedInvoices = invoices.map((invoice: any) => {
+    const transformedInvoices = invoices.map((invoice) => {
       const totalPaid = (invoice.payments || []).reduce(
-        (sum: number, payment: any) => sum + payment.amount,
+        (sum: number, payment) => sum + payment.amount,
         0
       );
       const outstanding = invoice.total - totalPaid;

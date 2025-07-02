@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Menu, User, LogOut, Settings } from "lucide-react";
+import { Menu, User, LogOut } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import Sidebar from "./Sidebar";
 import { useAuth } from "./AuthProvider";
 
@@ -14,7 +13,6 @@ interface AppLayoutProps {
 
 export default function AppLayout({ children }: AppLayoutProps) {
   const { user: currentUser, logout, loading } = useAuth();
-  const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
@@ -32,11 +30,11 @@ export default function AppLayout({ children }: AppLayoutProps) {
     };
   }, []);
 
-  const getUserInitials = (user: any) => {
+  const getUserInitials = (user: { firstName?: string; lastName?: string }) => {
     return `${user.firstName?.[0] || ''}${user.lastName?.[0] || ''}`.toUpperCase();
   };
 
-  const getUserRole = (user: any) => {
+  const getUserRole = (user: { roles: string[] }) => {
     if (user.roles.includes('super-admin')) return 'Super Admin';
     if (user.roles.includes('admin')) return 'Administrator';
     if (user.roles.includes('manager')) return 'Manager';

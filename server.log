@@ -1,0 +1,846 @@
+
+> quadco-app@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.3.4
+   - Local:        http://localhost:3000
+   - Network:      http://172.20.10.5:3000
+   - Environments: .env.local, .env
+
+ ✓ Starting...
+ ✓ Ready in 2.1s
+ ○ Compiling / ...
+ ✓ Compiled / in 3.7s (887 modules)
+ GET / 200 in 3921ms
+ GET /?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413024284 200 in 71ms
+ ○ Compiling /api/auth/me ...
+ ✓ Compiled /api/auth/me in 519ms (971 modules)
+ GET /api/auth/me 401 in 676ms
+ GET /?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413024284 200 in 204ms
+ ✓ Compiled /login in 168ms (964 modules)
+ GET /login 200 in 210ms
+ GET /api/auth/me 401 in 18ms
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 78ms
+ GET /api/auth/me 401 in 6ms
+ GET /login 200 in 61ms
+ ✓ Compiled /favicon.ico in 124ms (606 modules)
+ GET /favicon.ico 200 in 262ms
+ GET /api/auth/me 401 in 273ms
+ ✓ Compiled /api/auth/login in 227ms (968 modules)
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`email` = ? AND 1=1) LIMIT ? OFFSET ?
+ POST /api/auth/login 401 in 344ms
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`email` = ? AND 1=1) LIMIT ? OFFSET ?
+ POST /api/auth/login 401 in 17ms
+prisma:query SELECT 1
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`email` = ? AND 1=1) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`user_roles`.`id`, `main`.`user_roles`.`user_id`, `main`.`user_roles`.`role_id`, `main`.`user_roles`.`created_at` FROM `main`.`user_roles` WHERE `main`.`user_roles`.`user_id` IN (?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`roles`.`id`, `main`.`roles`.`name`, `main`.`roles`.`description`, `main`.`roles`.`is_system`, `main`.`roles`.`created_at`, `main`.`roles`.`updated_at` FROM `main`.`roles` WHERE `main`.`roles`.`id` IN (?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`role_permissions`.`id`, `main`.`role_permissions`.`role_id`, `main`.`role_permissions`.`permission_id`, `main`.`role_permissions`.`created_at` FROM `main`.`role_permissions` WHERE `main`.`role_permissions`.`role_id` IN (?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`permissions`.`id`, `main`.`permissions`.`name`, `main`.`permissions`.`description`, `main`.`permissions`.`resource`, `main`.`permissions`.`action`, `main`.`permissions`.`created_at`, `main`.`permissions`.`updated_at` FROM `main`.`permissions` WHERE `main`.`permissions`.`id` IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) LIMIT ? OFFSET ?
+prisma:query UPDATE `main`.`users` SET `last_login` = ?, `updated_at` = ? WHERE (`main`.`users`.`id` = ? AND 1=1) RETURNING `id` AS `id`, `email` AS `email`, `username` AS `username`, `first_name` AS `first_name`, `last_name` AS `last_name`, `password` AS `password`, `is_active` AS `is_active`, `last_login` AS `last_login`, `created_at` AS `created_at`, `updated_at` AS `updated_at`
+ POST /api/auth/login 200 in 176ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 576ms (972 modules)
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 733ms
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 65ms
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 26ms
+ GET /api/auth/me 200 in 31ms
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+ ○ Compiling /quotations ...
+ ✓ Compiled /quotations in 627ms (973 modules)
+ GET /quotations 200 in 712ms
+prisma:query SELECT 1
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+ GET /api/auth/me 200 in 147ms
+ ✓ Compiled /api/quotations in 153ms (976 modules)
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at`, COALESCE(`aggr_selection_0_LineItem`.`_aggr_count_lineItems`, 0) AS `_aggr_count_lineItems` FROM `main`.`quotations` LEFT JOIN (SELECT `main`.`line_items`.`quotation_id`, COUNT(*) AS `_aggr_count_lineItems` FROM `main`.`line_items` WHERE 1=1 GROUP BY `main`.`line_items`.`quotation_id`) AS `aggr_selection_0_LineItem` ON (`main`.`quotations`.`id` = `aggr_selection_0_LineItem`.`quotation_id`) WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name`, `main`.`customers`.`email` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /api/quotations 200 in 239ms
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at`, COALESCE(`aggr_selection_0_LineItem`.`_aggr_count_lineItems`, 0) AS `_aggr_count_lineItems` FROM `main`.`quotations` LEFT JOIN (SELECT `main`.`line_items`.`quotation_id`, COUNT(*) AS `_aggr_count_lineItems` FROM `main`.`line_items` WHERE 1=1 GROUP BY `main`.`line_items`.`quotation_id`) AS `aggr_selection_0_LineItem` ON (`main`.`quotations`.`id` = `aggr_selection_0_LineItem`.`quotation_id`) WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name`, `main`.`customers`.`email` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /api/quotations 200 in 5ms
+ ✓ Compiled /customers in 166ms (983 modules)
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name`, `main`.`customers`.`email`, `main`.`customers`.`phone`, `main`.`customers`.`address`, `main`.`customers`.`tax_id`, `main`.`customers`.`created_at`, `main`.`customers`.`updated_at`, COALESCE(`aggr_selection_0_Quotation`.`_aggr_count_quotations`, 0) AS `_aggr_count_quotations`, COALESCE(`aggr_selection_1_Invoice`.`_aggr_count_invoices`, 0) AS `_aggr_count_invoices`, COALESCE(`aggr_selection_2_DeliveryNote`.`_aggr_count_deliveryNotes`, 0) AS `_aggr_count_deliveryNotes` FROM `main`.`customers` LEFT JOIN (SELECT `main`.`quotations`.`customer_id`, COUNT(*) AS `_aggr_count_quotations` FROM `main`.`quotations` WHERE 1=1 GROUP BY `main`.`quotations`.`customer_id`) AS `aggr_selection_0_Quotation` ON (`main`.`customers`.`id` = `aggr_selection_0_Quotation`.`customer_id`) LEFT JOIN (SELECT `main`.`invoices`.`customer_id`, COUNT(*) AS `_aggr_count_invoices` FROM `main`.`invoices` WHERE 1=1 GROUP BY `main`.`invoices`.`customer_id`) AS `aggr_selection_1_Invoice` ON (`main`.`customers`.`id` = `aggr_selection_1_Invoice`.`customer_id`) LEFT JOIN (SELECT `main`.`delivery_notes`.`customer_id`, COUNT(*) AS `_aggr_count_deliveryNotes` FROM `main`.`delivery_notes` WHERE 1=1 GROUP BY `main`.`delivery_notes`.`customer_id`) AS `aggr_selection_2_DeliveryNote` ON (`main`.`customers`.`id` = `aggr_selection_2_DeliveryNote`.`customer_id`) WHERE 1=1 ORDER BY `main`.`customers`.`name` ASC LIMIT ? OFFSET ?
+ GET /customers 200 in 228ms
+ GET /api/auth/me 200 in 23ms
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+ ✓ Compiled /services in 214ms (990 modules)
+ GET /services 200 in 253ms
+ ✓ Compiled /api/services in 266ms (994 modules)
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+ GET /api/auth/me 200 in 296ms
+prisma:query SELECT 1
+prisma:query SELECT `main`.`services`.`id`, `main`.`services`.`name`, `main`.`services`.`description`, `main`.`services`.`base_price`, `main`.`services`.`unit`, `main`.`services`.`category_id`, `main`.`services`.`is_active`, `main`.`services`.`taxable`, `main`.`services`.`tax_rate`, `main`.`services`.`created_at`, `main`.`services`.`updated_at` FROM `main`.`services` WHERE 1=1 ORDER BY `main`.`services`.`name` ASC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`service_categories`.`id`, `main`.`service_categories`.`name`, `main`.`service_categories`.`description`, `main`.`service_categories`.`created_at`, `main`.`service_categories`.`updated_at`, COALESCE(`aggr_selection_0_Service`.`_aggr_count_services`, 0) AS `_aggr_count_services` FROM `main`.`service_categories` LEFT JOIN (SELECT `main`.`services`.`category_id`, COUNT(*) AS `_aggr_count_services` FROM `main`.`services` WHERE 1=1 GROUP BY `main`.`services`.`category_id`) AS `aggr_selection_0_Service` ON (`main`.`service_categories`.`id` = `aggr_selection_0_Service`.`category_id`) WHERE 1=1 ORDER BY `main`.`service_categories`.`name` ASC LIMIT ? OFFSET ?
+ GET /api/service-categories 200 in 303ms
+prisma:query SELECT `main`.`service_categories`.`id`, `main`.`service_categories`.`name` FROM `main`.`service_categories` WHERE `main`.`service_categories`.`id` IN (?) LIMIT ? OFFSET ?
+ GET /api/services 200 in 299ms
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+ GET /api/service-categories 200 in 14ms
+prisma:query SELECT `main`.`service_categories`.`id`, `main`.`service_categories`.`name`, `main`.`service_categories`.`description`, `main`.`service_categories`.`created_at`, `main`.`service_categories`.`updated_at`, COALESCE(`aggr_selection_0_Service`.`_aggr_count_services`, 0) AS `_aggr_count_services` FROM `main`.`service_categories` LEFT JOIN (SELECT `main`.`services`.`category_id`, COUNT(*) AS `_aggr_count_services` FROM `main`.`services` WHERE 1=1 GROUP BY `main`.`services`.`category_id`) AS `aggr_selection_0_Service` ON (`main`.`service_categories`.`id` = `aggr_selection_0_Service`.`category_id`) WHERE 1=1 ORDER BY `main`.`service_categories`.`name` ASC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`services`.`id`, `main`.`services`.`name`, `main`.`services`.`description`, `main`.`services`.`base_price`, `main`.`services`.`unit`, `main`.`services`.`category_id`, `main`.`services`.`is_active`, `main`.`services`.`taxable`, `main`.`services`.`tax_rate`, `main`.`services`.`created_at`, `main`.`services`.`updated_at` FROM `main`.`services` WHERE 1=1 ORDER BY `main`.`services`.`name` ASC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`service_categories`.`id`, `main`.`service_categories`.`name` FROM `main`.`service_categories` WHERE `main`.`service_categories`.`id` IN (?) LIMIT ? OFFSET ?
+ GET /api/services 200 in 15ms
+ ✓ Compiled /products in 302ms (999 modules)
+prisma:query SELECT `main`.`products`.`id`, `main`.`products`.`name`, `main`.`products`.`description`, `main`.`products`.`price`, `main`.`products`.`unit`, `main`.`products`.`category`, `main`.`products`.`stock`, `main`.`products`.`taxable`, `main`.`products`.`tax_rate`, `main`.`products`.`created_at`, `main`.`products`.`updated_at`, COALESCE(`aggr_selection_0_LineItem`.`_aggr_count_lineItems`, 0) AS `_aggr_count_lineItems` FROM `main`.`products` LEFT JOIN (SELECT `main`.`line_items`.`product_id`, COUNT(*) AS `_aggr_count_lineItems` FROM `main`.`line_items` WHERE 1=1 GROUP BY `main`.`line_items`.`product_id`) AS `aggr_selection_0_LineItem` ON (`main`.`products`.`id` = `aggr_selection_0_LineItem`.`product_id`) WHERE 1=1 ORDER BY `main`.`products`.`name` ASC LIMIT ? OFFSET ?
+ GET /products 200 in 345ms
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+ GET /api/auth/me 200 in 16ms
+ ✓ Compiled /users in 270ms (1006 modules)
+ GET /users 200 in 305ms
+ ✓ Compiled /api/users in 281ms (1008 modules)
+ GET /api/auth/me 200 in 306ms
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE 1=1 ORDER BY `main`.`users`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`user_roles`.`id`, `main`.`user_roles`.`user_id`, `main`.`user_roles`.`role_id`, `main`.`user_roles`.`created_at` FROM `main`.`user_roles` WHERE `main`.`user_roles`.`user_id` IN (?,?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`roles`.`id`, `main`.`roles`.`name`, `main`.`roles`.`description`, `main`.`roles`.`is_system`, `main`.`roles`.`created_at`, `main`.`roles`.`updated_at` FROM `main`.`roles` WHERE `main`.`roles`.`id` IN (?,?) LIMIT ? OFFSET ?
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`users`.`id` FROM `main`.`users` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+ GET /api/users?page=1&limit=10 200 in 314ms
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`users`.`id` FROM `main`.`users` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE 1=1 ORDER BY `main`.`users`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`user_roles`.`id`, `main`.`user_roles`.`user_id`, `main`.`user_roles`.`role_id`, `main`.`user_roles`.`created_at` FROM `main`.`user_roles` WHERE `main`.`user_roles`.`user_id` IN (?,?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`roles`.`id`, `main`.`roles`.`name`, `main`.`roles`.`description`, `main`.`roles`.`is_system`, `main`.`roles`.`created_at`, `main`.`roles`.`updated_at` FROM `main`.`roles` WHERE `main`.`roles`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /api/users?page=1&limit=10 200 in 4ms
+ ✓ Compiled /roles in 207ms (1015 modules)
+ GET /roles 200 in 242ms
+ ✓ Compiled /api/roles in 300ms (1017 modules)
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+ GET /api/auth/me 200 in 328ms
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`roles`.`id`, `main`.`roles`.`name`, `main`.`roles`.`description`, `main`.`roles`.`is_system`, `main`.`roles`.`created_at`, `main`.`roles`.`updated_at`, COALESCE(`aggr_selection_0_UserRole`.`_aggr_count_userRoles`, 0) AS `_aggr_count_userRoles` FROM `main`.`roles` LEFT JOIN (SELECT `main`.`user_roles`.`role_id`, COUNT(*) AS `_aggr_count_userRoles` FROM `main`.`user_roles` WHERE 1=1 GROUP BY `main`.`user_roles`.`role_id`) AS `aggr_selection_0_UserRole` ON (`main`.`roles`.`id` = `aggr_selection_0_UserRole`.`role_id`) WHERE 1=1 ORDER BY `main`.`roles`.`name` ASC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`role_permissions`.`id`, `main`.`role_permissions`.`role_id`, `main`.`role_permissions`.`permission_id`, `main`.`role_permissions`.`created_at` FROM `main`.`role_permissions` WHERE `main`.`role_permissions`.`role_id` IN (?,?,?,?,?,?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`permissions`.`id`, `main`.`permissions`.`name`, `main`.`permissions`.`description`, `main`.`permissions`.`resource`, `main`.`permissions`.`action`, `main`.`permissions`.`created_at`, `main`.`permissions`.`updated_at` FROM `main`.`permissions` WHERE `main`.`permissions`.`id` IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) LIMIT ? OFFSET ?
+ GET /api/roles 200 in 338ms
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`roles`.`id`, `main`.`roles`.`name`, `main`.`roles`.`description`, `main`.`roles`.`is_system`, `main`.`roles`.`created_at`, `main`.`roles`.`updated_at`, COALESCE(`aggr_selection_0_UserRole`.`_aggr_count_userRoles`, 0) AS `_aggr_count_userRoles` FROM `main`.`roles` LEFT JOIN (SELECT `main`.`user_roles`.`role_id`, COUNT(*) AS `_aggr_count_userRoles` FROM `main`.`user_roles` WHERE 1=1 GROUP BY `main`.`user_roles`.`role_id`) AS `aggr_selection_0_UserRole` ON (`main`.`roles`.`id` = `aggr_selection_0_UserRole`.`role_id`) WHERE 1=1 ORDER BY `main`.`roles`.`name` ASC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`role_permissions`.`id`, `main`.`role_permissions`.`role_id`, `main`.`role_permissions`.`permission_id`, `main`.`role_permissions`.`created_at` FROM `main`.`role_permissions` WHERE `main`.`role_permissions`.`role_id` IN (?,?,?,?,?,?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`permissions`.`id`, `main`.`permissions`.`name`, `main`.`permissions`.`description`, `main`.`permissions`.`resource`, `main`.`permissions`.`action`, `main`.`permissions`.`created_at`, `main`.`permissions`.`updated_at` FROM `main`.`permissions` WHERE `main`.`permissions`.`id` IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) LIMIT ? OFFSET ?
+ GET /api/roles 200 in 10ms
+ ✓ Compiled /permissions in 238ms (1024 modules)
+ GET /permissions 200 in 285ms
+ ✓ Compiled /api/permissions in 488ms (1026 modules)
+prisma:query SELECT 1
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+ GET /api/auth/me 200 in 517ms
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`permissions`.`id`, `main`.`permissions`.`name`, `main`.`permissions`.`description`, `main`.`permissions`.`resource`, `main`.`permissions`.`action`, `main`.`permissions`.`created_at`, `main`.`permissions`.`updated_at`, COALESCE(`aggr_selection_0_RolePermission`.`_aggr_count_rolePermissions`, 0) AS `_aggr_count_rolePermissions` FROM `main`.`permissions` LEFT JOIN (SELECT `main`.`role_permissions`.`permission_id`, COUNT(*) AS `_aggr_count_rolePermissions` FROM `main`.`role_permissions` WHERE 1=1 GROUP BY `main`.`role_permissions`.`permission_id`) AS `aggr_selection_0_RolePermission` ON (`main`.`permissions`.`id` = `aggr_selection_0_RolePermission`.`permission_id`) WHERE 1=1 ORDER BY `main`.`permissions`.`resource` ASC, `main`.`permissions`.`action` ASC LIMIT ? OFFSET ?
+ GET /api/permissions 200 in 518ms
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`permissions`.`id`, `main`.`permissions`.`name`, `main`.`permissions`.`description`, `main`.`permissions`.`resource`, `main`.`permissions`.`action`, `main`.`permissions`.`created_at`, `main`.`permissions`.`updated_at`, COALESCE(`aggr_selection_0_RolePermission`.`_aggr_count_rolePermissions`, 0) AS `_aggr_count_rolePermissions` FROM `main`.`permissions` LEFT JOIN (SELECT `main`.`role_permissions`.`permission_id`, COUNT(*) AS `_aggr_count_rolePermissions` FROM `main`.`role_permissions` WHERE 1=1 GROUP BY `main`.`role_permissions`.`permission_id`) AS `aggr_selection_0_RolePermission` ON (`main`.`permissions`.`id` = `aggr_selection_0_RolePermission`.`permission_id`) WHERE 1=1 ORDER BY `main`.`permissions`.`resource` ASC, `main`.`permissions`.`action` ASC LIMIT ? OFFSET ?
+ GET /api/permissions 200 in 8ms
+ ✓ Compiled /profile in 233ms (1033 modules)
+ GET /profile 200 in 272ms
+ GET /api/auth/me 200 in 97ms
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+ GET /api/auth/me 200 in 4ms
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+ GET /api/auth/me 200 in 4ms
+ ✓ Compiled /api/auth/logout in 327ms (1035 modules)
+ POST /api/auth/logout 200 in 346ms
+ GET /login 200 in 29ms
+ GET /api/auth/me 401 in 20ms
+ ✓ Compiled /api/auth/login in 327ms (658 modules)
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`email` = ? AND 1=1) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`user_roles`.`id`, `main`.`user_roles`.`user_id`, `main`.`user_roles`.`role_id`, `main`.`user_roles`.`created_at` FROM `main`.`user_roles` WHERE `main`.`user_roles`.`user_id` IN (?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`roles`.`id`, `main`.`roles`.`name`, `main`.`roles`.`description`, `main`.`roles`.`is_system`, `main`.`roles`.`created_at`, `main`.`roles`.`updated_at` FROM `main`.`roles` WHERE `main`.`roles`.`id` IN (?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`role_permissions`.`id`, `main`.`role_permissions`.`role_id`, `main`.`role_permissions`.`permission_id`, `main`.`role_permissions`.`created_at` FROM `main`.`role_permissions` WHERE `main`.`role_permissions`.`role_id` IN (?) LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`permissions`.`id`, `main`.`permissions`.`name`, `main`.`permissions`.`description`, `main`.`permissions`.`resource`, `main`.`permissions`.`action`, `main`.`permissions`.`created_at`, `main`.`permissions`.`updated_at` FROM `main`.`permissions` WHERE `main`.`permissions`.`id` IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) LIMIT ? OFFSET ?
+prisma:query UPDATE `main`.`users` SET `last_login` = ?, `updated_at` = ? WHERE (`main`.`users`.`id` = ? AND 1=1) RETURNING `id` AS `id`, `email` AS `email`, `username` AS `username`, `first_name` AS `first_name`, `last_name` AS `last_name`, `password` AS `password`, `is_active` AS `is_active`, `last_login` AS `last_login`, `created_at` AS `created_at`, `updated_at` AS `updated_at`
+ POST /api/auth/login 200 in 446ms
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 35ms
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`username`, `main`.`users`.`first_name`, `main`.`users`.`last_name`, `main`.`users`.`password`, `main`.`users`.`is_active`, `main`.`users`.`last_login`, `main`.`users`.`created_at`, `main`.`users`.`updated_at` FROM `main`.`users` WHERE (`main`.`users`.`id` = ? AND `main`.`users`.`is_active` = ?) LIMIT ? OFFSET ?
+ GET /api/auth/me 200 in 13ms
+ ✓ Compiled in 526ms (393 modules)
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 58ms
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 119ms
+ ✓ Compiled in 757ms (904 modules)
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 144ms
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 208ms
+ ✓ Compiled in 151ms (393 modules)
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 21ms
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 53ms
+ ✓ Compiled in 238ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 37ms
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 51ms
+ ✓ Compiled in 279ms (393 modules)
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 62ms
+ GET /dashboard 200 in 68ms
+ ✓ Compiled in 210ms (393 modules)
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 29ms
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 52ms
+ ✓ Compiled in 217ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 69ms
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 128ms
+ ✓ Compiled in 160ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 47ms
+ GET /dashboard 200 in 50ms
+ ✓ Compiled in 115ms (393 modules)
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 38ms
+ GET /dashboard 200 in 43ms
+ ✓ Compiled in 179ms (393 modules)
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 39ms
+ GET /dashboard 200 in 43ms
+ ✓ Compiled in 287ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 67ms
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 76ms
+ ✓ Compiled in 156ms (393 modules)
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 44ms
+ GET /dashboard 200 in 52ms
+ ✓ Compiled in 152ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 42ms
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 65ms
+ ✓ Compiled in 158ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 50ms
+ GET /dashboard 200 in 51ms
+ ✓ Compiled in 228ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 74ms
+ GET /dashboard 200 in 85ms
+ ✓ Compiled in 162ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 41ms
+ GET /dashboard 200 in 50ms
+ ✓ Compiled in 190ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 40ms
+ GET /dashboard 200 in 42ms
+ ✓ Compiled in 140ms (393 modules)
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 47ms
+ GET /dashboard 200 in 57ms
+ ✓ Compiled in 177ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 95ms
+ GET /dashboard 200 in 118ms
+ ✓ Compiled in 202ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 46ms
+ GET /dashboard 200 in 49ms
+ ✓ Compiled in 273ms (393 modules)
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 93ms
+ GET /dashboard 200 in 92ms
+ ✓ Compiled in 239ms (393 modules)
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 35ms
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 46ms
+ ✓ Compiled in 272ms (393 modules)
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 25ms
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 37ms
+ ✓ Compiled in 237ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 59ms
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 81ms
+ ✓ Compiled in 177ms (393 modules)
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 84ms
+ GET /dashboard 200 in 103ms
+ ✓ Compiled in 149ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 42ms
+ GET /dashboard 200 in 47ms
+ ✓ Compiled in 199ms (393 modules)
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 33ms
+ GET /dashboard 200 in 37ms
+ ✓ Compiled in 383ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 82ms
+ GET /dashboard 200 in 88ms
+ ✓ Compiled in 201ms (393 modules)
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 38ms
+ GET /dashboard 200 in 41ms
+ ✓ Compiled in 174ms (393 modules)
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 20ms
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 56ms
+ ✓ Compiled in 155ms (393 modules)
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 51ms
+ GET /dashboard 200 in 58ms
+ ✓ Compiled in 228ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 93ms
+ GET /dashboard 200 in 112ms
+ ✓ Compiled in 138ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 45ms
+ GET /dashboard 200 in 47ms
+ ✓ Compiled in 161ms (393 modules)
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 26ms
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 41ms
+ ✓ Compiled in 182ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 74ms
+ GET /dashboard 200 in 77ms
+ ✓ Compiled in 173ms (393 modules)
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 43ms
+ GET /dashboard 200 in 42ms
+ ✓ Compiled in 588ms (904 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 62ms
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 77ms
+ ✓ Compiled in 441ms (904 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 62ms
+ GET /dashboard 200 in 71ms
+ ✓ Compiled in 303ms (904 modules)
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 54ms
+ GET /dashboard 200 in 57ms
+ ✓ Compiled in 150ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 58ms
+ GET /dashboard 200 in 88ms
+ ✓ Compiled in 204ms (393 modules)
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 77ms
+ GET /dashboard 200 in 76ms
+ ✓ Compiled in 168ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 43ms
+ GET /dashboard 200 in 46ms
+ ✓ Compiled in 193ms (393 modules)
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 16ms
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 41ms
+ ✓ Compiled in 206ms (393 modules)
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 18ms
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 41ms
+ ✓ Compiled in 120ms (393 modules)
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 47ms
+ GET /dashboard 200 in 56ms
+ ✓ Compiled in 154ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 43ms
+ GET /dashboard 200 in 48ms
+ ✓ Compiled in 140ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 45ms
+ GET /dashboard 200 in 46ms
+ ✓ Compiled in 304ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 102ms
+ GET /dashboard 200 in 99ms
+ ✓ Compiled in 136ms (393 modules)
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 35ms
+ GET /dashboard 200 in 42ms
+ ✓ Compiled in 312ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 62ms
+ GET /dashboard 200 in 68ms
+ ✓ Compiled in 170ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 45ms
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /dashboard 200 in 53ms
+ ✓ Compiled in 176ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 88ms
+ GET /dashboard 200 in 82ms
+ ✓ Compiled in 156ms (393 modules)
+prisma:query SELECT 1
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`quotations`.`id` FROM `main`.`quotations` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`invoices`.`id` FROM `main`.`invoices` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT 1
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`customers`.`id` FROM `main`.`customers` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`products`.`id` FROM `main`.`products` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT COUNT(*) AS `_count._all` FROM (SELECT `main`.`delivery_notes`.`id` FROM `main`.`delivery_notes` WHERE 1=1 LIMIT ? OFFSET ?) AS `sub`
+prisma:query SELECT `main`.`quotations`.`id`, `main`.`quotations`.`customer_id`, `main`.`quotations`.`date`, `main`.`quotations`.`valid_until`, `main`.`quotations`.`status`, `main`.`quotations`.`subtotal`, `main`.`quotations`.`tax_amount`, `main`.`quotations`.`total`, `main`.`quotations`.`notes`, `main`.`quotations`.`created_by`, `main`.`quotations`.`created_at`, `main`.`quotations`.`updated_at` FROM `main`.`quotations` WHERE 1=1 ORDER BY `main`.`quotations`.`created_at` DESC LIMIT ? OFFSET ?
+prisma:query SELECT `main`.`customers`.`id`, `main`.`customers`.`name` FROM `main`.`customers` WHERE `main`.`customers`.`id` IN (?,?) LIMIT ? OFFSET ?
+ GET /login?id=f4b5958f-517e-4cbc-aa91-523bbb700ae9&vscodeBrowserReqId=1751413028462 200 in 42ms
+ GET /dashboard 200 in 54ms

@@ -19,7 +19,7 @@ export async function GET() {
     });
 
     return NextResponse.json(deliveryNotes);
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Failed to fetch delivery notes:", error);
     return NextResponse.json(
       { error: "Failed to fetch delivery notes" },
@@ -53,7 +53,15 @@ export async function POST(request: NextRequest) {
         status: status || "pending",
         notes,
         lineItems: {
-          create: lineItems.map((item: any) => ({
+          create: lineItems.map((item: {
+            productId?: string;
+            serviceId?: string;
+            itemType: string;
+            quantity: number;
+            unitPrice: number;
+            total: number;
+            description?: string;
+          }) => ({
             productId: item.productId,
             serviceId: item.serviceId,
             itemType: item.itemType,
@@ -76,7 +84,7 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json(deliveryNote, { status: 201 });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Failed to create delivery note:", error);
     return NextResponse.json(
       { error: "Failed to create delivery note" },

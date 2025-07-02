@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 
 interface User {
@@ -33,7 +33,7 @@ export default function UsersPage() {
     pages: 0
   });
 
-  const fetchUsers = async (page = 1, searchQuery = '') => {
+  const fetchUsers = useCallback(async (page = 1, searchQuery = '') => {
     try {
       setLoading(true);
       const params = new URLSearchParams({
@@ -53,11 +53,11 @@ export default function UsersPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [pagination.limit]);
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [fetchUsers]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { ArrowLeft, Edit, Download, Truck, CheckCircle } from "lucide-react";
+import { ArrowLeft, Edit, Download } from "lucide-react";
 import Link from "next/link";
 import { pdf } from '@react-pdf/renderer';
 import DeliveryNotePDF from '@/components/pdf/DeliveryNotePDF';
@@ -82,7 +82,7 @@ export default function DeliveryNoteDetailPage() {
     if (!deliveryNote) return;
 
     try {
-      const updateData: any = {
+      const updateData: { status: string; deliveredDate?: string } = {
         status: newStatus,
       };
 

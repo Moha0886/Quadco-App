@@ -29,7 +29,7 @@ export async function GET() {
     });
 
     return NextResponse.json(invoices);
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error fetching invoices:", error);
     return NextResponse.json(
       { error: "Failed to fetch invoices" },
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
     const invoiceNumber = `INV-${String(invoiceCount + 1).padStart(6, '0')}`;
 
     // Calculate total from line items
-    const total = lineItems.reduce((sum: number, item: any) => sum + item.total, 0);
+    const total = lineItems.reduce((sum: number, item: { total: number }) => sum + item.total, 0);
 
     // Create invoice with line items in a transaction
     const invoice = await prisma.$transaction(async (tx) => {
@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json(invoice, { status: 201 });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error creating invoice:", error);
     return NextResponse.json(
       { error: "Failed to create invoice" },

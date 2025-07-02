@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, Edit, Download, FileText, Truck, DollarSign, X } from "lucide-react";
+import { ArrowLeft, Edit, Download, Truck, DollarSign, X } from "lucide-react";
 import Link from "next/link";
 import { pdf } from '@react-pdf/renderer';
 import InvoicePDF from '@/components/pdf/InvoicePDF';

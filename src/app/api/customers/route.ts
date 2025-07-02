@@ -18,13 +18,13 @@ export const GET = requirePermission('customers', 'read')(async (request: NextRe
     } : {};
 
     const [customers, total] = await Promise.all([
-      (prisma as any).customer.findMany({
+      prisma.customer.findMany({
         where,
         skip: (page - 1) * limit,
         take: limit,
         orderBy: { createdAt: 'desc' }
       }),
-      (prisma as any).customer.count({ where })
+      prisma.customer.count({ where })
     ]);
 
     return NextResponse.json({
@@ -36,7 +36,7 @@ export const GET = requirePermission('customers', 'read')(async (request: NextRe
         pages: Math.ceil(total / limit)
       }
     });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error fetching customers:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
@@ -59,7 +59,7 @@ export const POST = requirePermission('customers', 'create')(async (request: Nex
     }
 
     // Check if customer with this email already exists
-    const existingCustomer = await (prisma as any).customer.findUnique({
+    const existingCustomer = await prisma.customer.findUnique({
       where: { email }
     });
 
@@ -71,7 +71,7 @@ export const POST = requirePermission('customers', 'create')(async (request: Nex
     }
 
     // Create the customer
-    const customer = await (prisma as any).customer.create({
+    const customer = await prisma.customer.create({
       data: {
         name,
         email,
@@ -82,7 +82,7 @@ export const POST = requirePermission('customers', 'create')(async (request: Nex
     });
 
     return NextResponse.json(customer, { status: 201 });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error creating customer:', error);
     return NextResponse.json(
       { error: 'Internal server error' },

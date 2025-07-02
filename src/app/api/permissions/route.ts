@@ -3,9 +3,9 @@ import { prisma } from '@/lib/prisma';
 import { requirePermission } from '@/lib/auth';
 
 // GET /api/permissions - List all permissions
-export const GET = requirePermission('permissions', 'read')(async (request: NextRequest) => {
+export const GET = requirePermission('permissions', 'read')(async () => {
   try {
-    const permissions = await (prisma as any).permission.findMany({
+    const permissions = await prisma.permission.findMany({
       include: {
         _count: {
           select: {
@@ -19,13 +19,13 @@ export const GET = requirePermission('permissions', 'read')(async (request: Next
       ]
     });
 
-    const formattedPermissions = permissions.map((permission: any) => ({
+    const formattedPermissions = permissions.map((permission) => ({
       ...permission,
       roleCount: permission._count.rolePermissions
     }));
 
     return Response.json(formattedPermissions);
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error fetching permissions:', error);
     return Response.json({ error: 'Failed to fetch permissions' }, { status: 500 });
   }
@@ -44,7 +44,7 @@ export const POST = requirePermission('permissions', 'create')(async (request: N
     }
 
     // Check if permission already exists
-    const existingPermission = await (prisma as any).permission.findFirst({
+    const existingPermission = await prisma.permission.findFirst({
       where: {
         resource: resource.trim(),
         action: action.trim()
@@ -57,7 +57,7 @@ export const POST = requirePermission('permissions', 'create')(async (request: N
       }, { status: 400 });
     }
 
-    const permission = await (prisma as any).permission.create({
+    const permission = await prisma.permission.create({
       data: {
         name: name.trim(),
         description: description?.trim() || null,
@@ -67,7 +67,7 @@ export const POST = requirePermission('permissions', 'create')(async (request: N
     });
 
     return Response.json(permission, { status: 201 });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error creating permission:', error);
     return Response.json({ error: 'Failed to create permission' }, { status: 500 });
   }

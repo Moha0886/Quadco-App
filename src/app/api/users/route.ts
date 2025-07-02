@@ -19,7 +19,7 @@ export const GET = requirePermission('users', 'read')(async (request: NextReques
     } : {};
 
     const [users, total] = await Promise.all([
-      (prisma as any).user.findMany({
+      prisma.user.findMany({
         where,
         include: {
           userRoles: {
@@ -32,13 +32,13 @@ export const GET = requirePermission('users', 'read')(async (request: NextReques
         take: limit,
         orderBy: { createdAt: 'desc' }
       }),
-      (prisma as any).user.count({ where })
+      prisma.user.count({ where })
     ]);
 
-    const usersWithRoles = users.map((user: any) => ({
+    const usersWithRoles = users.map((user) => ({
       ...user,
       password: undefined, // Don't return password
-      roles: user.userRoles.map((ur: any) => ur.role.name)
+      roles: user.userRoles.map((ur) => ur.role.name)
     }));
 
     return NextResponse.json({
@@ -50,7 +50,7 @@ export const GET = requirePermission('users', 'read')(async (request: NextReques
         pages: Math.ceil(total / limit)
       }
     });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error fetching users:", error);
     return NextResponse.json(
       { error: "Internal server error" },
@@ -71,7 +71,7 @@ export const POST = requirePermission('users', 'create')(async (request: NextReq
     }
 
     // Check if user already exists
-    const existingUser = await (prisma as any).user.findFirst({
+    const existingUser = await prisma.user.findFirst({
       where: {
         OR: [
           { email },
@@ -89,7 +89,7 @@ export const POST = requirePermission('users', 'create')(async (request: NextReq
 
     const hashedPassword = await AuthService.hashPassword(password);
 
-    const user = await (prisma as any).user.create({
+    const user = await prisma.user.create({
       data: {
         email,
         username,
@@ -112,15 +112,16 @@ export const POST = requirePermission('users', 'create')(async (request: NextReq
     });
 
     // Don't return password
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: _, ...userWithoutPassword } = user;
 
     return NextResponse.json({
       user: {
         ...userWithoutPassword,
-        roles: user.userRoles.map((ur: any) => ur.role.name)
+        roles: user.userRoles.map((ur) => ur.role.name)
       }
     }, { status: 201 });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error creating user:", error);
     return NextResponse.json(
       { error: "Internal server error" },

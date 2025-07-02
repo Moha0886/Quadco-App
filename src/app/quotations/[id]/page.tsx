@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, Edit, FileSpreadsheet, Download, Trash2 } from "lucide-react";
+import { ArrowLeft, Edit, FileSpreadsheet, Download } from "lucide-react";
 import Link from "next/link";
 import { pdf } from '@react-pdf/renderer';
 import QuotationPDF from '@/components/pdf/QuotationPDF';

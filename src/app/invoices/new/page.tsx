@@ -161,6 +161,7 @@ export default function NewInvoicePage() {
         body: JSON.stringify({
           ...formData,
           dueDate,
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           lineItems: lineItems.map(({ id, ...item }) => item),
         }),
       });
@@ -285,11 +286,11 @@ export default function NewInvoicePage() {
 
             {lineItems.length === 0 ? (
               <div className="text-center py-8 text-gray-500">
-                No items added yet. Click "Add Item" to get started.
+                No items added yet. Click &quot;Add Item&quot; to get started.
               </div>
             ) : (
               <div className="space-y-4">
-                {lineItems.map((item, index) => (
+                {lineItems.map((item) => (
                   <div
                     key={item.id}
                     className="border border-gray-200 rounded-lg p-4"

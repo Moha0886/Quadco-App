@@ -41,8 +41,8 @@ export default function PermissionsPage() {
         
         setGroupedPermissions(grouped);
       }
-    } catch (error) {
-      console.error('Error fetching permissions:', error);
+    } catch {
+      console.error('Error fetching permissions');
     } finally {
       setLoading(false);
     }
@@ -70,7 +70,7 @@ export default function PermissionsPage() {
         const errorData = await response.json();
         alert(`Error: ${errorData.error}`);
       }
-    } catch (error) {
+    } catch {
       alert('Error deleting permission');
     }
   };

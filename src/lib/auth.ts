@@ -32,13 +32,13 @@ export class AuthService {
   static verifyToken(token: string): UserPayload | null {
     try {
       return jwt.verify(token, JWT_SECRET) as UserPayload;
-    } catch (error) {
+    } catch {
       return null;
     }
   }
 
   static async getUserWithRolesAndPermissions(userId: string) {
-    const user = await (prisma as any).user.findUnique({
+    const user = await prisma.user.findUnique({
       where: { id: userId },
       include: {
         userRoles: {
@@ -59,9 +59,9 @@ export class AuthService {
 
     if (!user) return null;
 
-    const roles = user.userRoles.map((ur: any) => ur.role.name);
-    const permissions = user.userRoles.flatMap((ur: any) => 
-      ur.role.rolePermissions.map((rp: any) => `${rp.permission.resource}:${rp.permission.action}`)
+    const roles = user.userRoles.map((ur) => ur.role.name);
+    const permissions = user.userRoles.flatMap((ur) => 
+      ur.role.rolePermissions.map((rp) => `${rp.permission.resource}:${rp.permission.action}`)
     );
 
     return {
@@ -72,7 +72,7 @@ export class AuthService {
   }
 
   static async authenticateUser(email: string, password: string) {
-    const user = await (prisma as any).user.findUnique({
+    const user = await prisma.user.findUnique({
       where: { email },
       include: {
         userRoles: {
@@ -101,14 +101,14 @@ export class AuthService {
     }
 
     // Update last login
-    await (prisma as any).user.update({
+    await prisma.user.update({
       where: { id: user.id },
       data: { lastLogin: new Date() }
     });
 
-    const roles = user.userRoles.map((ur: any) => ur.role.name);
-    const permissions = user.userRoles.flatMap((ur: any) => 
-      ur.role.rolePermissions.map((rp: any) => `${rp.permission.resource}:${rp.permission.action}`)
+    const roles = user.userRoles.map((ur) => ur.role.name);
+    const permissions = user.userRoles.flatMap((ur) => 
+      ur.role.rolePermissions.map((rp) => `${rp.permission.resource}:${rp.permission.action}`)
     );
 
     return {
@@ -141,7 +141,7 @@ export class AuthService {
     if (!payload) return null;
 
     // Verify user still exists and is active
-    const user = await (prisma as any).user.findUnique({
+    const user = await prisma.user.findUnique({
       where: { id: payload.id, isActive: true }
     });
 
@@ -169,9 +169,16 @@ export class PermissionService {
   }
 }
 
+// Type for API route context
+interface ApiContext {
+  user?: any;
+  params?: { [key: string]: string };
+  [key: string]: any;
+}
+
 // Middleware helper for API routes
-export function requireAuth(handler: Function) {
-  return async (request: NextRequest, context: any) => {
+export function requireAuth(handler: (request: NextRequest, context: ApiContext) => Promise<Response>) {
+  return async (request: NextRequest, context: ApiContext) => {
     const user = await AuthService.getCurrentUser(request);
     if (!user) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
@@ -184,8 +191,8 @@ export function requireAuth(handler: Function) {
 }
 
 export function requirePermission(resource: string, action: string) {
-  return function(handler: Function) {
-    return async (request: NextRequest, context: any) => {
+  return function(handler: (request: NextRequest, context: ApiContext) => Promise<Response>) {
+    return async (request: NextRequest, context: ApiContext) => {
       const user = await AuthService.getCurrentUser(request);
       if (!user) {
         return Response.json({ error: 'Unauthorized' }, { status: 401 });

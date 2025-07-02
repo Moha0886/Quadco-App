@@ -8,7 +8,7 @@ import { useAuth } from '../../components/AuthProvider';
 export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{email: string; password: string}>({
     email: '',
     password: ''
   });
@@ -27,7 +27,7 @@ export default function LoginPage() {
       } else {
         setError('Invalid email or password');
       }
-    } catch (error) {
+    } catch {
       setError('Network error. Please try again.');
     } finally {
       setLoading(false);

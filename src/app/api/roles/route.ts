@@ -3,9 +3,9 @@ import { prisma } from '@/lib/prisma';
 import { requirePermission } from '@/lib/auth';
 
 // GET /api/roles - List all roles
-export const GET = requirePermission('roles', 'read')(async (request: NextRequest) => {
+export const GET = requirePermission('roles', 'read')(async () => {
   try {
-    const roles = await (prisma as any).role.findMany({
+    const roles = await prisma.role.findMany({
       include: {
         rolePermissions: {
           include: {
@@ -21,10 +21,10 @@ export const GET = requirePermission('roles', 'read')(async (request: NextReques
       orderBy: { name: 'asc' }
     });
 
-    const formattedRoles = roles.map((role: any) => ({
+    const formattedRoles = roles.map((role) => ({
       ...role,
       userCount: role._count.userRoles,
-      permissions: role.rolePermissions.map((rp: any) => ({
+      permissions: role.rolePermissions.map((rp) => ({
         id: rp.permission.id,
         name: rp.permission.name,
         resource: rp.permission.resource,
@@ -34,7 +34,7 @@ export const GET = requirePermission('roles', 'read')(async (request: NextReques
     }));
 
     return Response.json(formattedRoles);
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error fetching roles:', error);
     return Response.json({ error: 'Failed to fetch roles' }, { status: 500 });
   }
@@ -51,7 +51,7 @@ export const POST = requirePermission('roles', 'create')(async (request: NextReq
     }
 
     // Check if role already exists
-    const existingRole = await (prisma as any).role.findUnique({
+    const existingRole = await prisma.role.findUnique({
       where: { name: name.trim() }
     });
 
@@ -60,7 +60,7 @@ export const POST = requirePermission('roles', 'create')(async (request: NextReq
     }
 
     // Create role with permissions
-    const role = await (prisma as any).role.create({
+    const role = await prisma.role.create({
       data: {
         name: name.trim(),
         description: description?.trim() || null,
@@ -81,7 +81,7 @@ export const POST = requirePermission('roles', 'create')(async (request: NextReq
 
     const formattedRole = {
       ...role,
-      permissions: role.rolePermissions.map((rp: any) => ({
+      permissions: role.rolePermissions.map((rp) => ({
         id: rp.permission.id,
         name: rp.permission.name,
         resource: rp.permission.resource,
@@ -91,7 +91,7 @@ export const POST = requirePermission('roles', 'create')(async (request: NextReq
     };
 
     return Response.json(formattedRole, { status: 201 });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error creating role:', error);
     return Response.json({ error: 'Failed to create role' }, { status: 500 });
   }

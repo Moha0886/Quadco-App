@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import AppLayout from "../components/AppLayout";
 import { AuthProvider } from "../components/AuthProvider";
 import ConditionalLayout from "../components/ConditionalLayout";
 

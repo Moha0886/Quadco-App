@@ -7,7 +7,7 @@ export const GET = requirePermission('users', 'read')(async (request: NextReques
   try {
     const { id } = params;
 
-    const user = await (prisma as any).user.findUnique({
+    const user = await prisma.user.findUnique({
       where: { id },
       include: {
         userRoles: {
@@ -30,18 +30,19 @@ export const GET = requirePermission('users', 'read')(async (request: NextReques
       return Response.json({ error: 'User not found' }, { status: 404 });
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...userWithoutPassword } = user;
-    const roles = user.userRoles.map((ur: any) => ur.role);
-    const permissions = user.userRoles.flatMap((ur: any) => 
-      ur.role.rolePermissions.map((rp: any) => rp.permission)
+    const roles = user.userRoles.map((ur) => ur.role);
+    const permissions = user.userRoles.flatMap((ur) => 
+      ur.role.rolePermissions.map((rp) => rp.permission)
     );
 
     return Response.json({
       ...userWithoutPassword,
       roles,
-      permissions: [...new Map(permissions.map((p: any) => [p.id, p])).values()]
+      permissions: [...new Map(permissions.map((p) => [p.id, p])).values()]
     });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error fetching user:', error);
     return Response.json({ error: 'Failed to fetch user' }, { status: 500 });
   }
@@ -59,7 +60,7 @@ export const PUT = requirePermission('users', 'update')(async (request: NextRequ
     }
 
     // Check if user exists
-    const existingUser = await (prisma as any).user.findUnique({
+    const existingUser = await prisma.user.findUnique({
       where: { id }
     });
 
@@ -68,7 +69,7 @@ export const PUT = requirePermission('users', 'update')(async (request: NextRequ
     }
 
     // Check if another user with this email or username exists
-    const duplicateUser = await (prisma as any).user.findFirst({
+    const duplicateUser = await prisma.user.findFirst({
       where: {
         OR: [
           { email, id: { not: id } },
@@ -82,7 +83,7 @@ export const PUT = requirePermission('users', 'update')(async (request: NextRequ
     }
 
     // Prepare update data
-    const updateData: any = {
+    const updateData: Record<string, unknown> = {
       email,
       username,
       firstName,
@@ -95,7 +96,7 @@ export const PUT = requirePermission('users', 'update')(async (request: NextRequ
     }
 
     // Update user and roles
-    const user = await (prisma as any).user.update({
+    const user = await prisma.user.update({
       where: { id },
       data: {
         ...updateData,
@@ -115,12 +116,13 @@ export const PUT = requirePermission('users', 'update')(async (request: NextRequ
       }
     });
 
-    const { password: _, ...userWithoutPassword } = user;
+    // Remove unused password assignment
     return Response.json({
-      ...userWithoutPassword,
-      roles: user.userRoles.map((ur: any) => ur.role)
+      ...user,
+      password: undefined,
+      roles: user.userRoles.map((ur) => ur.role)
     });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error updating user:', error);
     return Response.json({ error: 'Failed to update user' }, { status: 500 });
   }
@@ -131,7 +133,7 @@ export const DELETE = requirePermission('users', 'delete')(async (request: NextR
   try {
     const { id } = params;
 
-    const user = await (prisma as any).user.findUnique({
+    const user = await prisma.user.findUnique({
       where: { id }
     });
 
@@ -139,12 +141,12 @@ export const DELETE = requirePermission('users', 'delete')(async (request: NextR
       return Response.json({ error: 'User not found' }, { status: 404 });
     }
 
-    await (prisma as any).user.delete({
+    await prisma.user.delete({
       where: { id }
     });
 
     return Response.json({ message: 'User deleted successfully' });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error deleting user:', error);
     return Response.json({ error: 'Failed to delete user' }, { status: 500 });
   }

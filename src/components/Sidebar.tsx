@@ -1,11 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import {
-  Calculator,
   FileText,
   Users,
   Package,
@@ -14,14 +12,13 @@ import {
   FileSpreadsheet,
   Truck,
   Home,
-  Menu,
   X,
   Shield,
   UserCog,
   Key,
   User
 } from "lucide-react";
-import { useAuth, ProtectedComponent } from "./AuthProvider";
+import { ProtectedComponent } from "./AuthProvider";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: Home },

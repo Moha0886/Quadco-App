@@ -25,7 +25,7 @@ export async function GET(
       where: { customerId },
       include: {
         payments: true,
-      } as any,
+      },
     });
 
     let totalInvoiced = 0;
@@ -43,8 +43,8 @@ export async function GET(
     for (const invoice of invoices) {
       totalInvoiced += invoice.total;
       
-      const invoicePayments = (invoice as any).payments || [];
-      const invoicePaid = invoicePayments.reduce((sum: number, payment: any) => sum + payment.amount, 0);
+      const invoicePayments = invoice.payments || [];
+      const invoicePaid = invoicePayments.reduce((sum: number, payment) => sum + payment.amount, 0);
       totalPaid += invoicePaid;
 
       const outstanding = invoice.total - invoicePaid;
@@ -56,7 +56,7 @@ export async function GET(
         
         // Calculate payment days for paid invoices
         if (invoicePayments.length > 0) {
-          const lastPaymentDate = new Date(Math.max(...invoicePayments.map((p: any) => new Date(p.paymentDate).getTime())));
+          const lastPaymentDate = new Date(Math.max(...invoicePayments.map((p) => new Date(p.paymentDate).getTime())));
           const invoiceDate = new Date(invoice.date);
           const paymentDays = Math.ceil((lastPaymentDate.getTime() - invoiceDate.getTime()) / (1000 * 60 * 60 * 24));
           totalPaymentDays += paymentDays;
@@ -87,7 +87,7 @@ export async function GET(
     };
 
     return NextResponse.json(financialSummary);
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error fetching customer financial summary:", error);
     return NextResponse.json(
       { error: "Internal server error" },

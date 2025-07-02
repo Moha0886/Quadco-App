@@ -21,7 +21,7 @@ export async function GET(
     }
 
     // Fetch customer payments through invoices
-    const payments = await (prisma as any).payment.findMany({
+    const payments = await prisma.payment.findMany({
       where: {
         invoice: {
           customerId: customerId,

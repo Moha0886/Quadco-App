@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Calculator, FileText, FileSpreadsheet, Truck, Users, Package, Plus, TrendingUp } from "lucide-react";
+import { Calculator, FileText, FileSpreadsheet, Truck, Users, Package, Plus } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 
 async function getDashboardStats() {

@@ -53,7 +53,7 @@ export default function UserDetailPage() {
       } else {
         setError('User not found');
       }
-    } catch (error) {
+    } catch {
       setError('Error fetching user details');
     } finally {
       setLoading(false);

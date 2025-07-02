@@ -45,7 +45,7 @@ export default function ProfilePage() {
         setError('Failed to fetch user profile');
         router.push('/login');
       }
-    } catch (error) {
+    } catch {
       setError('Network error');
       router.push('/login');
     } finally {
@@ -93,7 +93,7 @@ export default function ProfilePage() {
         const errorData = await response.json();
         setPasswordError(errorData.error || 'Failed to change password');
       }
-    } catch (error) {
+    } catch {
       setPasswordError('Network error. Please try again.');
     }
   };

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 
 interface Permission {
@@ -25,7 +25,7 @@ export default function RolesPage() {
   const [roles, setRoles] = useState<Role[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchRoles = async () => {
+  const fetchRoles = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch('/api/roles');
@@ -38,11 +38,11 @@ export default function RolesPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchRoles();
-  }, []);
+  }, [fetchRoles]);
 
   const handleDeleteRole = async (roleId: string, roleName: string) => {
     if (!confirm(`Are you sure you want to delete the role "${roleName}"?`)) {
@@ -60,7 +60,7 @@ export default function RolesPage() {
         const errorData = await response.json();
         alert(`Error: ${errorData.error}`);
       }
-    } catch (error) {
+    } catch {
       alert('Error deleting role');
     }
   };

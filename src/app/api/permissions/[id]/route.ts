@@ -7,7 +7,7 @@ export const GET = requirePermission('permissions', 'read')(async (request: Next
   try {
     const { id } = params;
 
-    const permission = await (prisma as any).permission.findUnique({
+    const permission = await prisma.permission.findUnique({
       where: { id },
       include: {
         rolePermissions: {

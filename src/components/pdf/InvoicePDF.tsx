@@ -323,6 +323,8 @@ const InvoicePDF: React.FC<InvoicePDFProps> = ({ invoice }) => {
         {/* Header with Logo and Company Info */}
         <View style={styles.header}>
           <View style={{ flexDirection: 'row', alignItems: 'flex-start', flex: 1 }}>
+            {/* React-PDF Image component doesn't support alt prop - accessibility handled by document structure */}
+            {/* eslint-disable-next-line jsx-a11y/alt-text */}
             <Image
               style={styles.logo}
               src="/quadco-logo.png"

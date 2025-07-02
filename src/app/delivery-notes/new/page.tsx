@@ -131,7 +131,7 @@ export default function NewDeliveryNotePage() {
     setLineItems(lineItems.filter((item) => item.id !== id));
   };
 
-  const updateLineItem = (id: string, field: string, value: any) => {
+  const updateLineItem = (id: string, field: string, value: string | number) => {
     setLineItems(
       lineItems.map((item) =>
         item.id === id ? { ...item, [field]: value } : item
@@ -325,7 +325,7 @@ export default function NewDeliveryNotePage() {
               </div>
 
               <div className="space-y-4">
-                {lineItems.map((item, index) => (
+                {lineItems.map((item) => (
                   <div
                     key={item.id}
                     className="grid grid-cols-1 md:grid-cols-12 gap-4 p-4 border border-gray-200 rounded-md"

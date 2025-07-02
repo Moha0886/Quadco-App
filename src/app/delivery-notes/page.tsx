@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Plus, Search, Eye, Edit, Trash2, Truck, Download } from "lucide-react";
+import { Plus, Search, Eye, Edit, Trash2, Truck } from "lucide-react";
 import Link from "next/link";
 
 interface Customer {
