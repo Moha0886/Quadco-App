@@ -3,15 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate",
-    "db:deploy": "prisma migrate deploy",
-    "seed": "tsx scripts/seed.ts && tsx scripts/create-super-admin.ts",
-    "db:setup": "prisma db push && npm run seed",
-    "db:check": "node check-db.js"
+    "seed": "tsx scripts/seed.ts",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
@@ -23,13 +20,11 @@
     "@react-pdf/renderer": "^4.3.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/pg": "^8.15.4",
     "bcryptjs": "^3.0.2",
     "date-fns": "^4.1.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.525.0",
     "next": "15.3.4",
-    "pg": "^8.16.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.59.0",
