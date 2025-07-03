@@ -225,9 +225,9 @@ model LineItem {
   // Relations
   product      Product?      @relation(fields: [productId], references: [id])
   service      Service?      @relation(fields: [serviceId], references: [id])
-  quotation    Quotation?    @relation(fields: [documentId], references: [id])
-  invoice      Invoice?      @relation(fields: [documentId], references: [id])
-  deliveryNote DeliveryNote? @relation(fields: [documentId], references: [id])
+  quotation    Quotation?    @relation(fields: [documentId], references: [id], map: "line_items_quotation_fkey")
+  invoice      Invoice?      @relation(fields: [documentId], references: [id], map: "line_items_invoice_fkey")
+  deliveryNote DeliveryNote? @relation(fields: [documentId], references: [id], map: "line_items_delivery_note_fkey")
 
   @@map("line_items")
 }
