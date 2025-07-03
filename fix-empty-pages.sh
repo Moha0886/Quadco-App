@@ -1,13 +1,40 @@
+#!/bin/bash
+
+# Script to add basic page implementations to empty files
+
+echo "🔧 Adding basic implementations to empty page files..."
+
+# Fix all empty page files
+find src/app -name "*.tsx" -size 0 | while read file; do
+  echo "Fixing: $file"
+  
+  # Determine page name from path
+  pageName=$(basename "$(dirname "$file")")
+  if [[ "$pageName" == "new" ]]; then
+    pageName="New $(basename "$(dirname "$(dirname "$file")")")"
+  elif [[ "$pageName" == "edit" ]]; then
+    pageName="Edit $(basename "$(dirname "$(dirname "$file")")")"
+  elif [[ "$pageName" == "[id]" ]]; then
+    pageName="$(basename "$(dirname "$(dirname "$file")")")"
+  elif [[ "$file" == *"[id]"* ]]; then
+    pageName="$(basename "$(dirname "$file")")"
+  fi
+  
+  # Capitalize first letter
+  pageName="$(echo "$pageName" | sed 's/^./\U&/')"
+  
+  # Create basic page template
+  cat > "$file" << EOF
 'use client';
 
 import { Suspense } from 'react';
 
-export default function UrolesPage() {
+export default function ${pageName//[^a-zA-Z0-9]/}Page() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">
-          Uroles
+          $pageName
         </h1>
         
         <div className="bg-white rounded-lg shadow-md p-6">
@@ -35,3 +62,8 @@ export default function UrolesPage() {
     </div>
   );
 }
+EOF
+done
+
+echo "✅ All empty page files have been fixed!"
+echo "🏗️ You can now build and deploy your application."
