@@ -1,111 +1,65 @@
 import { PrismaClient } from '@prisma/client';
-import { AuthService } from '../src/lib/auth';
+import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
 async function createSuperAdmin() {
-  console.log('Creating super admin user...');
-
   try {
-    // First, create or update a super admin role
-    const superAdminRole = await (prisma as any).role.upsert({
-      where: { name: 'super-admin' },
-      update: {},
-      create: {
-        name: 'super-admin',
-        description: 'Super Administrator with unlimited access to all system functions including user management',
-        isSystem: true
-      }
+    console.log('🔐 Creating Super Admin User...');
+
+    // Check if super admin already exists
+    const existingAdmin = await prisma.user.findUnique({
+      where: { email: 'admin@quadco.com' }
     });
 
-    // Get all permissions
-    const allPermissions = await (prisma as any).permission.findMany();
-
-    // Assign all permissions to super admin role
-    console.log('Assigning all permissions to super admin role...');
-    for (const permission of allPermissions) {
-      await (prisma as any).rolePermission.upsert({
-        where: {
-          roleId_permissionId: {
-            roleId: superAdminRole.id,
-            permissionId: permission.id
-          }
-        },
-        update: {},
-        create: {
-          roleId: superAdminRole.id,
-          permissionId: permission.id
-        }
-      });
+    if (existingAdmin) {
+      console.log('✅ Super admin already exists!');
+      console.log('📧 Email: admin@quadco.com');
+      console.log('🔑 Password: admin123');
+      return;
     }
 
-    // Create super admin user
-    const superAdminPassword = await AuthService.hashPassword('SuperAdmin2025!');
-    
-    const superAdminUser = await (prisma as any).user.upsert({
-      where: { email: 'superadmin@quadco.com' },
-      update: {
-        password: superAdminPassword,
-        isActive: true
-      },
-      create: {
-        email: 'superadmin@quadco.com',
-        username: 'superadmin',
-        firstName: 'Super',
-        lastName: 'Administrator',
-        password: superAdminPassword,
-        isActive: true
-      }
+    // Get or create Super Admin role
+    let superAdminRole = await prisma.role.findFirst({
+      where: { name: 'Super Admin' }
     });
 
-    // Assign super admin role to the user
-    await (prisma as any).userRole.upsert({
-      where: {
-        userId_roleId: {
-          userId: superAdminUser.id,
-          roleId: superAdminRole.id
+    if (!superAdminRole) {
+      superAdminRole = await prisma.role.create({
+        data: {
+          name: 'Super Admin',
+          description: 'Full system access'
         }
-      },
-      update: {},
-      create: {
-        userId: superAdminUser.id,
+      });
+      console.log('✅ Created Super Admin role');
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash('admin123', 10);
+
+    // Create super admin user
+    const adminUser = await prisma.user.create({
+      data: {
+        firstName: 'Super',
+        lastName: 'Admin',
+        email: 'admin@quadco.com',
+        password: hashedPassword,
+        isActive: true,
         roleId: superAdminRole.id
       }
     });
 
-    console.log('✅ Super admin user created successfully!');
-    console.log('');
-    console.log('🔐 Super Admin Credentials:');
-    console.log('Email: superadmin@quadco.com');
-    console.log('Password: SuperAdmin2025!');
-    console.log('Role: super-admin');
-    console.log('');
-    console.log('🚨 IMPORTANT SECURITY NOTES:');
-    console.log('- This account has UNLIMITED access to all system functions');
-    console.log('- Please change the password immediately after first login');
-    console.log('- Consider enabling 2FA if available');
-    console.log('- Use this account only for critical administrative tasks');
-    console.log('- Regular admin account (admin@quadco.com) should be used for daily tasks');
+    console.log('🎉 Super Admin created successfully!');
+    console.log('📧 Email: admin@quadco.com');
+    console.log('🔑 Password: admin123');
+    console.log('🆔 User ID:', adminUser.id);
+    console.log('👤 Role:', superAdminRole.name);
 
   } catch (error) {
-    console.error('❌ Error creating super admin user:', error);
-    process.exit(1);
+    console.error('❌ Error creating super admin:', error);
   } finally {
     await prisma.$disconnect();
   }
 }
 
-async function main() {
-  try {
-    await createSuperAdmin();
-  } catch (error) {
-    console.error('Error:', error);
-    process.exit(1);
-  }
-}
-
-if (require.main === module) {
-  main();
-}
-
-export { createSuperAdmin };
+createSuperAdmin();
