@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,7 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// User Management Models
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
@@ -21,169 +17,148 @@ model User {
   roleId    String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  // Relations
-  role Role? @relation(fields: [roleId], references: [id])
+  role      Role?    @relation(fields: [roleId], references: [id])
 
   @@map("users")
 }
 
 model Role {
-  id          String   @id @default(cuid())
-  name        String   @unique
+  id          String           @id @default(cuid())
+  name        String           @unique
   description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relations
-  users       User[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
   permissions RolePermission[]
+  users       User[]
 
   @@map("roles")
 }
 
 model Permission {
-  id          String   @id @default(cuid())
-  name        String   @unique
+  id          String           @id @default(cuid())
+  name        String           @unique
   description String?
-  resource    String   // e.g., 'customers', 'products', 'invoices'
-  action      String   // e.g., 'create', 'read', 'update', 'delete'
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relations
-  roles RolePermission[]
+  resource    String
+  action      String
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  roles       RolePermission[]
 
   @@map("permissions")
 }
 
 model RolePermission {
-  id           String @id @default(cuid())
+  id           String     @id @default(cuid())
   roleId       String
   permissionId String
-
-  // Relations
-  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
-  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
 
   @@unique([roleId, permissionId])
   @@map("role_permissions")
 }
 
-// Business Models
 model Customer {
-  id        String   @id @default(cuid())
-  name      String
-  email     String?
-  phone     String?
-  address   String?
-  taxId     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relations
-  quotations    Quotation[]
-  invoices      Invoice[]
+  id            String         @id @default(cuid())
+  name          String
+  email         String?
+  phone         String?
+  address       String?
+  taxId         String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   deliveryNotes DeliveryNote[]
+  invoices      Invoice[]
   payments      Payment[]
+  quotations    Quotation[]
 
   @@map("customers")
 }
 
 model Product {
-  id          String  @id @default(cuid())
+  id          String     @id @default(cuid())
   name        String
   description String?
-  price       Decimal @db.Decimal(10, 2)
-  unit        String  @default("pcs")
+  price       Decimal    @db.Decimal(10, 2)
+  unit        String     @default("pcs")
   category    String?
-  stock       Int     @default(0)
-  isActive    Boolean @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relations
-  lineItems LineItem[]
+  stock       Int        @default(0)
+  isActive    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  lineItems   LineItem[]
 
   @@map("products")
 }
 
 model ServiceCategory {
-  id          String   @id @default(cuid())
-  name        String   @unique
+  id          String    @id @default(cuid())
+  name        String    @unique
   description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relations
-  services Service[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  services    Service[]
 
   @@map("service_categories")
 }
 
 model Service {
-  id          String  @id @default(cuid())
+  id          String           @id @default(cuid())
   name        String
   description String?
-  basePrice   Decimal @db.Decimal(10, 2)
-  unit        String  @default("hour")
+  basePrice   Decimal          @db.Decimal(10, 2)
+  unit        String           @default("hour")
   categoryId  String?
-  isActive    Boolean @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relations
-  category  ServiceCategory? @relation(fields: [categoryId], references: [id])
-  lineItems LineItem[]
+  isActive    Boolean          @default(true)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  lineItems   LineItem[]
+  category    ServiceCategory? @relation(fields: [categoryId], references: [id])
 
   @@map("services")
 }
 
 model Quotation {
-  id         String            @id @default(cuid())
+  id         String          @id @default(cuid())
   customerId String
-  date       DateTime          @default(now())
+  date       DateTime        @default(now())
   validUntil DateTime?
-  status     QuotationStatus   @default(DRAFT)
+  status     QuotationStatus @default(DRAFT)
   notes      String?
-  subtotal   Decimal           @db.Decimal(10, 2)
-  taxRate    Decimal           @default(0) @db.Decimal(5, 2)
-  taxAmount  Decimal           @default(0) @db.Decimal(10, 2)
-  total      Decimal           @db.Decimal(10, 2)
-  currency   String            @default("NGN")
-  createdAt  DateTime          @default(now())
-  updatedAt  DateTime          @updatedAt
-
-  // Relations
-  customer  Customer   @relation(fields: [customerId], references: [id])
-  lineItems LineItem[]
-  invoices  Invoice[]
+  subtotal   Decimal         @db.Decimal(10, 2)
+  taxRate    Decimal         @default(0) @db.Decimal(5, 2)
+  taxAmount  Decimal         @default(0) @db.Decimal(10, 2)
+  total      Decimal         @db.Decimal(10, 2)
+  currency   String          @default("NGN")
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+  invoices   Invoice[]
+  lineItems  LineItem[]
+  customer   Customer        @relation(fields: [customerId], references: [id])
 
   @@map("quotations")
 }
 
 model Invoice {
-  id           String        @id @default(cuid())
-  customerId   String
-  quotationId  String?
-  date         DateTime      @default(now())
-  dueDate      DateTime?
-  status       InvoiceStatus @default(DRAFT)
-  notes        String?
-  subtotal     Decimal       @db.Decimal(10, 2)
-  taxRate      Decimal       @default(0) @db.Decimal(5, 2)
-  taxAmount    Decimal       @default(0) @db.Decimal(10, 2)
-  total        Decimal       @db.Decimal(10, 2)
-  paidAmount   Decimal       @default(0) @db.Decimal(10, 2)
-  currency     String        @default("NGN")
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-
-  // Relations
+  id            String         @id @default(cuid())
+  customerId    String
+  quotationId   String?
+  date          DateTime       @default(now())
+  dueDate       DateTime?
+  status        InvoiceStatus  @default(DRAFT)
+  notes         String?
+  subtotal      Decimal        @db.Decimal(10, 2)
+  taxRate       Decimal        @default(0) @db.Decimal(5, 2)
+  taxAmount     Decimal        @default(0) @db.Decimal(10, 2)
+  total         Decimal        @db.Decimal(10, 2)
+  paidAmount    Decimal        @default(0) @db.Decimal(10, 2)
+  currency      String         @default("NGN")
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  deliveryNotes DeliveryNote[]
   customer      Customer       @relation(fields: [customerId], references: [id])
   quotation     Quotation?     @relation(fields: [quotationId], references: [id])
   lineItems     LineItem[]
-  deliveryNotes DeliveryNote[]
   payments      Payment[]
 
   @@map("invoices")
@@ -199,60 +174,56 @@ model DeliveryNote {
   notes         String?
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @updatedAt
-
-  // Relations
-  customer  Customer  @relation(fields: [customerId], references: [id])
-  invoice   Invoice?  @relation(fields: [invoiceId], references: [id])
-  lineItems LineItem[]
+  customer      Customer           @relation(fields: [customerId], references: [id])
+  invoice       Invoice?           @relation(fields: [invoiceId], references: [id])
+  lineItems     LineItem[]
 
   @@map("delivery_notes")
 }
 
 model LineItem {
-  id             String  @id @default(cuid())
-  itemType       String  // 'PRODUCT' or 'SERVICE'
+  id             String        @id @default(cuid())
+  itemType       String
   productId      String?
   serviceId      String?
   documentId     String
-  documentType   String  // 'QUOTATION', 'INVOICE', 'DELIVERY_NOTE'
+  documentType   String
   description    String
-  quantity       Decimal @db.Decimal(10, 3)
-  unitPrice      Decimal @db.Decimal(10, 2)
-  total          Decimal @db.Decimal(10, 2)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-
-  // Relations
-  product      Product?      @relation(fields: [productId], references: [id])
-  service      Service?      @relation(fields: [serviceId], references: [id])
-  quotation    Quotation?    @relation(fields: [documentId], references: [id], map: "line_items_quotation_fkey")
-  invoice      Invoice?      @relation(fields: [documentId], references: [id], map: "line_items_invoice_fkey")
-  deliveryNote DeliveryNote? @relation(fields: [documentId], references: [id], map: "line_items_delivery_note_fkey")
+  quantity       Decimal       @db.Decimal(10, 3)
+  unitPrice      Decimal       @db.Decimal(10, 2)
+  total          Decimal       @db.Decimal(10, 2)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  product        Product?      @relation(fields: [productId], references: [id])
+  service        Service?      @relation(fields: [serviceId], references: [id])
+  Quotation      Quotation?    @relation(fields: [quotationId], references: [id])
+  quotationId    String?
+  Invoice        Invoice?      @relation(fields: [invoiceId], references: [id])
+  invoiceId      String?
+  DeliveryNote   DeliveryNote? @relation(fields: [deliveryNoteId], references: [id])
+  deliveryNoteId String?
 
   @@map("line_items")
 }
 
 model Payment {
-  id          String        @id @default(cuid())
-  customerId  String
-  invoiceId   String?
-  amount      Decimal       @db.Decimal(10, 2)
-  currency    String        @default("NGN")
-  method      PaymentMethod @default(CASH)
-  reference   String?
-  date        DateTime      @default(now())
-  notes       String?
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-
-  // Relations
-  customer Customer @relation(fields: [customerId], references: [id])
-  invoice  Invoice? @relation(fields: [invoiceId], references: [id])
+  id         String        @id @default(cuid())
+  customerId String
+  invoiceId  String?
+  amount     Decimal       @db.Decimal(10, 2)
+  currency   String        @default("NGN")
+  method     PaymentMethod @default(CASH)
+  reference  String?
+  date       DateTime      @default(now())
+  notes      String?
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  customer   Customer      @relation(fields: [customerId], references: [id])
+  invoice    Invoice?      @relation(fields: [invoiceId], references: [id])
 
   @@map("payments")
 }
 
-// Enums
 enum QuotationStatus {
   DRAFT
   SENT

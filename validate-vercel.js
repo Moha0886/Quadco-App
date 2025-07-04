@@ -10,7 +10,7 @@ const http = require('http');
 const url = require('url');
 
 // Update this with your actual Vercel URL once deployed
-const appUrl = 'https://quadco-kx4reuvol-moha0886s-projects.vercel.app';
+const appUrl = 'https://quadco-app-moha0886s-projects.vercel.app';
 
 console.log('🚀 VERCEL DEPLOYMENT VALIDATION');
 console.log('================================');
