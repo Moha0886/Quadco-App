@@ -51,8 +51,13 @@ echo "   Invoices API:"
 INVOICES=$(curl -s -H "Content-Type: application/json" "$BASE_URL/api/invoices")
 echo "     GET: $(echo $INVOICES | jq -r '.invoices | length // .error // "Error"')"
 
+# Test delivery notes API
+echo "   Delivery Notes API:"
+DELIVERY_NOTES=$(curl -s -H "Content-Type: application/json" "$BASE_URL/api/delivery-notes")
+echo "     GET: $(echo $DELIVERY_NOTES | jq -r '.deliveryNotes | length // .error // "Error"')"
+
 echo "6. Testing page accessibility..."
-PAGES=("/customers" "/products" "/services" "/quotations" "/invoices" "/users" "/permissions" "/roles")
+PAGES=("/customers" "/products" "/services" "/quotations" "/invoices" "/delivery-notes" "/users" "/permissions" "/roles")
 
 for page in "${PAGES[@]}"; do
   STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$BASE_URL$page")

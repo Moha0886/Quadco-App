@@ -166,6 +166,7 @@ model Invoice {
 
 model DeliveryNote {
   id            String             @id @default(cuid())
+  deliveryNumber String           @unique
   customerId    String
   invoiceId     String?
   date          DateTime           @default(now())

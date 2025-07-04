@@ -1,62 +1,100 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-export default function ServicesPage() {
-  const [services] = useState([
-    {
-      id: 1,
-      name: 'Software Development',
-      category: 'Technology',
-      price: 350000,
-      duration: '4-8 weeks',
-      description: 'Custom software development and web applications',
-      status: 'Active'
-    },
-    {
-      id: 2,
-      name: 'Business Consulting',
-      category: 'Consulting',
-      price: 75000,
-      duration: '1-2 hours',
-      description: 'Strategic business planning and optimization',
-      status: 'Active'
-    },
-    {
-      id: 3,
-      name: 'Digital Marketing',
-      category: 'Marketing',
-      price: 125000,
-      duration: '1 month',
-      description: 'Complete digital marketing and social media management',
-      status: 'Active'
-    },
-    {
-      id: 4,
-      name: 'IT Support',
-      category: 'Technology',
-      price: 50000,
-      duration: 'Monthly',
-      description: 'Ongoing IT support and maintenance services',
-      status: 'Active'
-    }
-  ]);
+interface Service {
+  id: number;
+  name: string;
+  description?: string;
+  basePrice: number;
+  unit: string;
+  categoryId?: number;
+  createdAt: string;
+  updatedAt: string;
+  category: {
+    id: number;
+    name: string;
+  } | null;
+  _count: {
+    lineItems: number;
+  };
+}
 
+export default function ServicesPage() {
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  const fetchServices = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/services');
+      if (!response.ok) {
+        throw new Error('Failed to fetch services');
+      }
+      const data = await response.json();
+      setServices(data.services || []);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const categories = ['All', 'Technology', 'Consulting', 'Marketing', 'Design', 'Support'];
 
   const filteredServices = services.filter(service => {
     const matchesSearch = service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         service.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || service.category === selectedCategory;
+                         (service.description && service.description.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesCategory = selectedCategory === 'All' || 
+                           (service.category && service.category.name === selectedCategory);
     return matchesSearch && matchesCategory;
   });
 
   const totalServices = services.length;
-  const activeServices = services.filter(s => s.status === 'Active').length;
+  const activeServices = services.length; // All services are considered active for now
+
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div className="flex">
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-red-800">Error loading services</h3>
+              <div className="mt-2 text-sm text-red-700">
+                <p>{error}</p>
+              </div>
+              <div className="mt-4">
+                <button
+                  onClick={fetchServices}
+                  className="bg-red-100 px-4 py-2 rounded-md text-red-800 hover:bg-red-200"
+                >
+                  Try Again
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -142,7 +180,7 @@ export default function ServicesPage() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Avg. Price</p>
-                <p className="text-2xl font-bold text-gray-900">₦{Math.round(services.reduce((sum, s) => sum + s.price, 0) / services.length).toLocaleString()}</p>
+                <p className="text-2xl font-bold text-gray-900">₦{services.length > 0 ? Math.round(services.reduce((sum, s) => sum + s.basePrice, 0) / services.length).toLocaleString() : '0'}</p>
               </div>
             </div>
           </div>
@@ -184,10 +222,10 @@ export default function ServicesPage() {
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900">{service.name}</h3>
-                    <p className="text-sm text-gray-500">{service.category}</p>
+                    <p className="text-sm text-gray-500">{service.category?.name || 'Uncategorized'}</p>
                   </div>
                   <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                    {service.status}
+                    Active
                   </span>
                 </div>
                 
@@ -195,8 +233,8 @@ export default function ServicesPage() {
                 
                 <div className="flex justify-between items-center mb-4">
                   <div>
-                    <p className="text-2xl font-bold text-gray-900">₦{service.price.toLocaleString()}</p>
-                    <p className="text-sm text-gray-500">{service.duration}</p>
+                    <p className="text-2xl font-bold text-gray-900">₦{service.basePrice.toLocaleString()}</p>
+                    <p className="text-sm text-gray-500">per {service.unit}</p>
                   </div>
                 </div>
                 

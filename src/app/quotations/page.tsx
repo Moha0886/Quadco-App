@@ -1,48 +1,117 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+interface Quotation {
+  id: number;
+  quotationNumber: string;
+  title: string;
+  description?: string;
+  status: string;
+  customerId: number;
+  totalAmount: number;
+  validUntil: string;
+  createdAt: string;
+  updatedAt: string;
+  customer: {
+    id: number;
+    name: string;
+    email: string;
+  };
+  _count: {
+    lineItems: number;
+  };
+}
+
 export default function QuotationsPage() {
-  const [quotations] = useState([
-    {
-      id: 1,
-      number: 'QUO-2024-001',
-      customerName: 'ABC Corporation',
-      amount: 150000,
-      status: 'Pending',
-      date: '2024-01-15',
-      validUntil: '2024-02-15'
-    },
-    {
-      id: 2,
-      number: 'QUO-2024-002',
-      customerName: 'XYZ Limited',
-      amount: 75000,
-      status: 'Approved',
-      date: '2024-01-10',
-      validUntil: '2024-02-10'
-    },
-    {
-      id: 3,
-      number: 'QUO-2024-003',
-      customerName: 'Tech Solutions Ltd',
-      amount: 250000,
-      status: 'Draft',
-      date: '2024-01-20',
-      validUntil: '2024-02-20'
+  const [quotations, setQuotations] = useState<Quotation[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('All');
+
+  useEffect(() => {
+    fetchQuotations();
+  }, []);
+
+  const fetchQuotations = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await fetch('/api/quotations');
+      if (!response.ok) {
+        throw new Error('Failed to fetch quotations');
+      }
+      const data = await response.json();
+      setQuotations(data.quotations || []);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+    } finally {
+      setLoading(false);
     }
-  ]);
+  };
+
+  const statuses = ['All', 'Draft', 'Sent', 'Accepted', 'Rejected', 'Expired'];
+
+  const filteredQuotations = quotations.filter(quotation => {
+    const matchesSearch = quotation.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         quotation.quotationNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         quotation.customer.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = selectedStatus === 'All' || quotation.status === selectedStatus;
+    return matchesSearch && matchesStatus;
+  });
+
+  const totalQuotations = quotations.length;
+  const pendingQuotations = quotations.filter(q => q.status === 'Sent').length;
+  const acceptedQuotations = quotations.filter(q => q.status === 'Accepted').length;
+  const totalValue = quotations.reduce((sum, q) => sum + q.totalAmount, 0);
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Pending': return 'bg-yellow-100 text-yellow-800';
-      case 'Approved': return 'bg-green-100 text-green-800';
       case 'Draft': return 'bg-gray-100 text-gray-800';
+      case 'Sent': return 'bg-blue-100 text-blue-800';
+      case 'Accepted': return 'bg-green-100 text-green-800';
       case 'Rejected': return 'bg-red-100 text-red-800';
+      case 'Expired': return 'bg-yellow-100 text-yellow-800';
       default: return 'bg-gray-100 text-gray-800';
     }
   };
+
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div className="flex">
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-red-800">Error loading quotations</h3>
+              <div className="mt-2 text-sm text-red-700">
+                <p>{error}</p>
+              </div>
+              <div className="mt-4">
+                <button
+                  onClick={fetchQuotations}
+                  className="bg-red-100 px-4 py-2 rounded-md text-red-800 hover:bg-red-200"
+                >
+                  Try Again
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -51,7 +120,7 @@ export default function QuotationsPage() {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Quotations</h1>
-            <p className="text-gray-600 mt-2">Manage your business quotations and proposals</p>
+            <p className="text-gray-600 mt-2">Manage your customer quotations and proposals</p>
           </div>
           <Link
             href="/quotations/new"
@@ -75,7 +144,7 @@ export default function QuotationsPage() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Total Quotations</p>
-                <p className="text-2xl font-bold text-gray-900">3</p>
+                <p className="text-2xl font-bold text-gray-900">{totalQuotations}</p>
               </div>
             </div>
           </div>
@@ -89,7 +158,7 @@ export default function QuotationsPage() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Pending</p>
-                <p className="text-2xl font-bold text-gray-900">1</p>
+                <p className="text-2xl font-bold text-gray-900">{pendingQuotations}</p>
               </div>
             </div>
           </div>
@@ -102,8 +171,8 @@ export default function QuotationsPage() {
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Approved</p>
-                <p className="text-2xl font-bold text-gray-900">1</p>
+                <p className="text-sm font-medium text-gray-600">Accepted</p>
+                <p className="text-2xl font-bold text-gray-900">{acceptedQuotations}</p>
               </div>
             </div>
           </div>
@@ -117,18 +186,42 @@ export default function QuotationsPage() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Total Value</p>
-                <p className="text-2xl font-bold text-gray-900">₦475,000</p>
+                <p className="text-2xl font-bold text-gray-900">₦{totalValue.toLocaleString()}</p>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Filters */}
+        <div className="bg-white rounded-lg shadow-sm border p-6 mb-8">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-1">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Search Quotations</label>
+              <input
+                type="text"
+                placeholder="Search by title, number, or customer..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div className="sm:w-64">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+              <select
+                value={selectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                {statuses.map(status => (
+                  <option key={status} value={status}>{status}</option>
+                ))}
+              </select>
             </div>
           </div>
         </div>
 
         {/* Quotations Table */}
         <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">Recent Quotations</h2>
-          </div>
-          
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
@@ -140,31 +233,34 @@ export default function QuotationsPage() {
                     Customer
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Amount
+                    Status
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
+                    Amount
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Valid Until
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
+                    Items
+                  </th>
+                  <th className="relative px-6 py-3">
+                    <span className="sr-only">Actions</span>
                   </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {quotations.map((quotation) => (
+                {filteredQuotations.map((quotation) => (
                   <tr key={quotation.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{quotation.number}</div>
-                      <div className="text-sm text-gray-500">{quotation.date}</div>
+                      <div>
+                        <div className="text-sm font-medium text-gray-900">{quotation.title}</div>
+                        <div className="text-sm text-gray-500">{quotation.quotationNumber}</div>
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{quotation.customerName}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">₦{quotation.amount.toLocaleString()}</div>
+                      <div className="text-sm text-gray-900">{quotation.customer.name}</div>
+                      <div className="text-sm text-gray-500">{quotation.customer.email}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(quotation.status)}`}>
@@ -172,14 +268,26 @@ export default function QuotationsPage() {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {quotation.validUntil}
+                      ₦{quotation.totalAmount.toLocaleString()}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <div className="flex space-x-3">
-                        <Link href={`/quotations/${quotation.id}`} className="text-blue-600 hover:text-blue-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {new Date(quotation.validUntil).toLocaleDateString()}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {quotation._count.lineItems} items
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div className="flex space-x-2">
+                        <Link
+                          href={`/quotations/${quotation.id}`}
+                          className="text-blue-600 hover:text-blue-900"
+                        >
                           View
                         </Link>
-                        <Link href={`/quotations/${quotation.id}/edit`} className="text-indigo-600 hover:text-indigo-900">
+                        <Link
+                          href={`/quotations/${quotation.id}/edit`}
+                          className="text-gray-600 hover:text-gray-900"
+                        >
                           Edit
                         </Link>
                       </div>
@@ -190,6 +298,24 @@ export default function QuotationsPage() {
             </table>
           </div>
         </div>
+
+        {filteredQuotations.length === 0 && !loading && (
+          <div className="text-center py-12">
+            <div className="text-gray-400 mb-4">
+              <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">No Quotations Found</h3>
+            <p className="text-gray-600 mb-4">Try adjusting your search or filter criteria.</p>
+            <Link
+              href="/quotations/new"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+            >
+              Create Your First Quotation
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

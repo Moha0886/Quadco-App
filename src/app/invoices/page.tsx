@@ -1,53 +1,118 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+interface Invoice {
+  id: number;
+  invoiceNumber: string;
+  customerId: number;
+  quotationId?: number;
+  totalAmount: number;
+  taxAmount: number;
+  status: string;
+  issueDate: string;
+  dueDate: string;
+  createdAt: string;
+  updatedAt: string;
+  customer: {
+    id: number;
+    name: string;
+    email: string;
+  };
+  _count: {
+    lineItems: number;
+  };
+}
+
 export default function InvoicesPage() {
-  const [invoices] = useState([
-    {
-      id: 1,
-      number: 'INV-2024-001',
-      customerName: 'ABC Corporation',
-      amount: 150000,
-      status: 'Paid',
-      date: '2024-01-15',
-      dueDate: '2024-02-15'
-    },
-    {
-      id: 2,
-      number: 'INV-2024-002',
-      customerName: 'XYZ Limited',
-      amount: 75000,
-      status: 'Pending',
-      date: '2024-01-18',
-      dueDate: '2024-02-18'
-    },
-    {
-      id: 3,
-      number: 'INV-2024-003',
-      customerName: 'Tech Solutions Ltd',
-      amount: 250000,
-      status: 'Overdue',
-      date: '2024-01-10',
-      dueDate: '2024-01-25'
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('All');
+
+  useEffect(() => {
+    fetchInvoices();
+  }, []);
+
+  const fetchInvoices = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await fetch('/api/invoices');
+      if (!response.ok) {
+        throw new Error('Failed to fetch invoices');
+      }
+      const data = await response.json();
+      setInvoices(data.invoices || []);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+    } finally {
+      setLoading(false);
     }
-  ]);
+  };
+
+  const statuses = ['All', 'Draft', 'Sent', 'Paid', 'Overdue', 'Cancelled'];
+
+  const filteredInvoices = invoices.filter(invoice => {
+    const matchesSearch = invoice.invoiceNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         invoice.customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         invoice.customer.email.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = selectedStatus === 'All' || invoice.status === selectedStatus;
+    return matchesSearch && matchesStatus;
+  });
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Paid': return 'bg-green-100 text-green-800';
-      case 'Pending': return 'bg-yellow-100 text-yellow-800';
-      case 'Overdue': return 'bg-red-100 text-red-800';
       case 'Draft': return 'bg-gray-100 text-gray-800';
+      case 'Sent': return 'bg-blue-100 text-blue-800';
+      case 'Paid': return 'bg-green-100 text-green-800';
+      case 'Overdue': return 'bg-red-100 text-red-800';
+      case 'Cancelled': return 'bg-gray-100 text-gray-800';
       default: return 'bg-gray-100 text-gray-800';
     }
   };
 
-  const totalAmount = invoices.reduce((sum, invoice) => sum + invoice.amount, 0);
-  const paidAmount = invoices.filter(inv => inv.status === 'Paid').reduce((sum, invoice) => sum + invoice.amount, 0);
-  const pendingAmount = invoices.filter(inv => inv.status === 'Pending').reduce((sum, invoice) => sum + invoice.amount, 0);
+  const totalAmount = invoices.reduce((sum, invoice) => sum + invoice.totalAmount, 0);
+  const paidAmount = invoices.filter(inv => inv.status === 'Paid').reduce((sum, invoice) => sum + invoice.totalAmount, 0);
+  const pendingAmount = invoices.filter(inv => inv.status === 'Sent').reduce((sum, invoice) => sum + invoice.totalAmount, 0);
   const overdueCount = invoices.filter(inv => inv.status === 'Overdue').length;
+
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div className="flex">
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-red-800">Error loading invoices</h3>
+              <div className="mt-2 text-sm text-red-700">
+                <p>{error}</p>
+              </div>
+              <div className="mt-4">
+                <button
+                  onClick={fetchInvoices}
+                  className="bg-red-100 px-4 py-2 rounded-md text-red-800 hover:bg-red-200"
+                >
+                  Try Again
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -159,17 +224,18 @@ export default function InvoicesPage() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {invoices.map((invoice) => (
+                {filteredInvoices.map((invoice) => (
                   <tr key={invoice.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{invoice.number}</div>
-                      <div className="text-sm text-gray-500">{invoice.date}</div>
+                      <div className="text-sm font-medium text-gray-900">{invoice.invoiceNumber}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{invoice.customerName}</div>
+                      <div className="text-sm text-gray-900">{invoice.customer.name}</div>
+                      <div className="text-sm text-gray-500">{invoice.customer.email}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">₦{invoice.amount.toLocaleString()}</div>
+                      <div className="text-sm text-gray-900">₦{invoice.totalAmount.toLocaleString()}</div>
+                      <div className="text-sm text-gray-500">Tax: ₦{invoice.taxAmount.toLocaleString()}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(invoice.status)}`}>
@@ -177,7 +243,7 @@ export default function InvoicesPage() {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {invoice.dueDate}
+                      {new Date(invoice.dueDate).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex space-x-3">
@@ -195,6 +261,24 @@ export default function InvoicesPage() {
             </table>
           </div>
         </div>
+
+        {filteredInvoices.length === 0 && !loading && (
+          <div className="text-center py-12">
+            <div className="text-gray-400 mb-4">
+              <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">No Invoices Found</h3>
+            <p className="text-gray-600 mb-4">Try adjusting your search or filter criteria.</p>
+            <Link
+              href="/invoices/new"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+            >
+              Create Your First Invoice
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
