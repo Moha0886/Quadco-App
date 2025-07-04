@@ -153,30 +153,42 @@ export default function NewQuotationPage() {
   const { subtotal, taxAmount, total } = calculateTotal();
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <Link href="/quotations" className="text-blue-600 hover:text-blue-500 font-medium">
-            ← Back to Quotations
-          </Link>
-          <h1 className="mt-4 text-3xl font-bold text-gray-900 dark:text-white">
-            Create New Quotation
-          </h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Create a professional quotation for your customer.
-          </p>
-        </div>
+    <div className="max-w-5xl mx-auto">
+      <div className="mb-8">
+        <Link href="/quotations" className="inline-flex items-center text-blue-600 hover:text-blue-500 font-medium transition-colors">
+          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Back to Quotations
+        </Link>
+        <h1 className="mt-4 text-3xl font-bold text-gray-900 dark:text-white">
+          Create New Quotation
+        </h1>
+        <p className="mt-2 text-gray-600 dark:text-gray-400">
+          Create a professional quotation for your customer with detailed line items and pricing.
+        </p>
+      </div>
 
-        <div className="bg-white dark:bg-gray-800 shadow-xl rounded-lg">
-          <form onSubmit={handleSubmit} className="p-6 space-y-6">
+      <div className="bg-white dark:bg-gray-800 shadow-xl rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <form onSubmit={handleSubmit} className="divide-y divide-gray-200 dark:divide-gray-700">
+          {/* Header Section */}
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 px-6 py-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Quotation Details</h2>
+          </div>
+
+          <div className="p-6 space-y-8">
             {error && (
-              <div className="bg-red-50 dark:bg-red-900/50 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-md">
+              <div className="bg-red-50 dark:bg-red-900/50 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-lg flex items-center">
+                <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
                 {error}
               </div>
             )}
 
+            {/* Customer and Basic Details */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
+              <div className="space-y-2">
                 <label htmlFor="customerId" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Customer *
                 </label>
@@ -184,7 +196,7 @@ export default function NewQuotationPage() {
                   id="customerId"
                   name="customerId"
                   required
-                  className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-blue-500"
+                  className="block w-full rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 transition-all"
                   value={formData.customerId}
                   onChange={handleChange}
                 >
@@ -197,7 +209,7 @@ export default function NewQuotationPage() {
                 </select>
               </div>
 
-              <div>
+              <div className="space-y-2">
                 <label htmlFor="validUntil" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Valid Until
                 </label>
@@ -205,168 +217,239 @@ export default function NewQuotationPage() {
                   type="date"
                   id="validUntil"
                   name="validUntil"
-                  className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-blue-500"
+                  className="block w-full rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 transition-all"
                   value={formData.validUntil}
                   onChange={handleChange}
                 />
               </div>
             </div>
 
-            <div>
+            <div className="space-y-2">
               <label htmlFor="notes" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Notes
+                Notes & Comments
               </label>
               <textarea
                 id="notes"
                 name="notes"
                 rows={3}
-                className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-blue-500"
+                className="block w-full rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 transition-all"
+                placeholder="Add any additional notes or terms for this quotation..."
                 value={formData.notes}
                 onChange={handleChange}
               />
             </div>
 
-            {/* Line Items */}
-            <div>
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white">Line Items</h3>
+            {/* Line Items Section */}
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
+                  <svg className="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  </svg>
+                  Line Items
+                </h3>
                 <button
                   type="button"
                   onClick={addLineItem}
-                  className="px-3 py-1 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                  className="inline-flex items-center px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 transition-all"
                 >
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
                   Add Item
                 </button>
               </div>
 
-              {lineItems.map((item, index) => (
-                <div key={index} className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-3 p-3 border border-gray-200 dark:border-gray-600 rounded-md">
-                  <div>
-                    <select
-                      value={item.itemType}
-                      onChange={(e) => updateLineItem(index, 'itemType', e.target.value)}
-                      className="w-full rounded-md border border-gray-300 dark:border-gray-600 px-2 py-1 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                    >
-                      <option value="PRODUCT">Product</option>
-                      <option value="SERVICE">Service</option>
-                    </select>
-                  </div>
-                  
-                  <div>
-                    {item.itemType === 'PRODUCT' ? (
-                      <select
-                        value={item.productId || ''}
-                        onChange={(e) => updateLineItem(index, 'productId', e.target.value)}
-                        className="w-full rounded-md border border-gray-300 dark:border-gray-600 px-2 py-1 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                      >
-                        <option value="">Select product</option>
-                        {products.map(product => (
-                          <option key={product.id} value={product.id}>{product.name}</option>
-                        ))}
-                      </select>
-                    ) : (
-                      <select
-                        value={item.serviceId || ''}
-                        onChange={(e) => updateLineItem(index, 'serviceId', e.target.value)}
-                        className="w-full rounded-md border border-gray-300 dark:border-gray-600 px-2 py-1 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                      >
-                        <option value="">Select service</option>
-                        {services.map(service => (
-                          <option key={service.id} value={service.id}>{service.name}</option>
-                        ))}
-                      </select>
-                    )}
-                  </div>
-
-                  <div>
-                    <input
-                      type="number"
-                      placeholder="Quantity"
-                      value={item.quantity}
-                      onChange={(e) => updateLineItem(index, 'quantity', parseFloat(e.target.value) || 0)}
-                      className="w-full rounded-md border border-gray-300 dark:border-gray-600 px-2 py-1 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                    />
-                  </div>
-
-                  <div>
-                    <input
-                      type="number"
-                      step="0.01"
-                      placeholder="Unit Price"
-                      value={item.unitPrice}
-                      onChange={(e) => updateLineItem(index, 'unitPrice', parseFloat(e.target.value) || 0)}
-                      className="w-full rounded-md border border-gray-300 dark:border-gray-600 px-2 py-1 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                    />
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-gray-900 dark:text-white">
-                      ₦{(item.quantity * item.unitPrice).toFixed(2)}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => removeLineItem(index)}
-                      className="text-red-600 hover:text-red-800 text-sm"
-                    >
-                      Remove
-                    </button>
-                  </div>
+              {lineItems.length === 0 ? (
+                <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center">
+                  <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  </svg>
+                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">No line items added yet</p>
+                  <p className="text-xs text-gray-400 dark:text-gray-500">Click "Add Item" to get started</p>
                 </div>
-              ))}
+              ) : (
+                <div className="space-y-3">
+                  {lineItems.map((item, index) => (
+                    <div key={index} className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
+                      <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
+                        <div className="space-y-1">
+                          <label className="block text-xs font-medium text-gray-600 dark:text-gray-400">Type</label>
+                          <select
+                            value={item.itemType}
+                            onChange={(e) => updateLineItem(index, 'itemType', e.target.value)}
+                            className="w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                          >
+                            <option value="PRODUCT">Product</option>
+                            <option value="SERVICE">Service</option>
+                          </select>
+                        </div>
+                        
+                        <div className="space-y-1">
+                          <label className="block text-xs font-medium text-gray-600 dark:text-gray-400">
+                            {item.itemType === 'PRODUCT' ? 'Product' : 'Service'}
+                          </label>
+                          {item.itemType === 'PRODUCT' ? (
+                            <select
+                              value={item.productId || ''}
+                              onChange={(e) => updateLineItem(index, 'productId', e.target.value)}
+                              className="w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                            >
+                              <option value="">Select product</option>
+                              {products.map(product => (
+                                <option key={product.id} value={product.id}>{product.name}</option>
+                              ))}
+                            </select>
+                          ) : (
+                            <select
+                              value={item.serviceId || ''}
+                              onChange={(e) => updateLineItem(index, 'serviceId', e.target.value)}
+                              className="w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                            >
+                              <option value="">Select service</option>
+                              {services.map(service => (
+                                <option key={service.id} value={service.id}>{service.name}</option>
+                              ))}
+                            </select>
+                          )}
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="block text-xs font-medium text-gray-600 dark:text-gray-400">Description</label>
+                          <input
+                            type="text"
+                            placeholder="Item description"
+                            value={item.description}
+                            onChange={(e) => updateLineItem(index, 'description', e.target.value)}
+                            className="w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="block text-xs font-medium text-gray-600 dark:text-gray-400">Quantity</label>
+                          <input
+                            type="number"
+                            step="0.01"
+                            placeholder="1"
+                            value={item.quantity}
+                            onChange={(e) => updateLineItem(index, 'quantity', parseFloat(e.target.value) || 0)}
+                            className="w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="block text-xs font-medium text-gray-600 dark:text-gray-400">Unit Price</label>
+                          <input
+                            type="number"
+                            step="0.01"
+                            placeholder="0.00"
+                            value={item.unitPrice}
+                            onChange={(e) => updateLineItem(index, 'unitPrice', parseFloat(e.target.value) || 0)}
+                            className="w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="block text-xs font-medium text-gray-600 dark:text-gray-400">Total</label>
+                          <div className="flex justify-between items-center">
+                            <span className="text-lg font-semibold text-gray-900 dark:text-white">
+                              ₦{(item.quantity * item.unitPrice).toFixed(2)}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => removeLineItem(index)}
+                              className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 p-2 rounded-md hover:bg-red-50 dark:hover:bg-red-900/50 transition-all"
+                              title="Remove item"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
-            {/* Tax and Total */}
-            <div className="border-t pt-4">
+            {/* Tax and Total Section */}
+            <div className="bg-gradient-to-r from-gray-50 to-blue-50 dark:from-gray-700/50 dark:to-blue-900/20 rounded-lg p-6 border border-gray-200 dark:border-gray-600">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
+                <div className="space-y-2">
                   <label htmlFor="taxRate" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Tax Rate (%)
                   </label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    id="taxRate"
-                    name="taxRate"
-                    className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-blue-500"
-                    value={formData.taxRate}
-                    onChange={handleChange}
-                  />
+                  <div className="relative">
+                    <input
+                      type="number"
+                      step="0.01"
+                      id="taxRate"
+                      name="taxRate"
+                      className="block w-full rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-3 pr-8 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 transition-all"
+                      value={formData.taxRate}
+                      onChange={handleChange}
+                      placeholder="7.5"
+                    />
+                    <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <span className="text-gray-500 text-sm">%</span>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span>Subtotal:</span>
-                    <span>₦{subtotal.toFixed(2)}</span>
+                <div className="space-y-3">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600 dark:text-gray-400">Subtotal:</span>
+                    <span className="font-medium text-gray-900 dark:text-white">₦{subtotal.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Tax ({formData.taxRate}%):</span>
-                    <span>₦{taxAmount.toFixed(2)}</span>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600 dark:text-gray-400">Tax ({formData.taxRate}%):</span>
+                    <span className="font-medium text-gray-900 dark:text-white">₦{taxAmount.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between font-bold text-lg">
-                    <span>Total:</span>
-                    <span>₦{total.toFixed(2)}</span>
+                  <div className="border-t border-gray-300 dark:border-gray-600 pt-3">
+                    <div className="flex justify-between text-lg font-bold">
+                      <span className="text-gray-900 dark:text-white">Total:</span>
+                      <span className="text-blue-600 dark:text-blue-400">₦{total.toFixed(2)}</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div className="flex justify-end space-x-3">
-              <Link
-                href="/quotations"
-                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Cancel
-              </Link>
-              <button
-                type="submit"
-                disabled={loading || !formData.customerId}
-                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? 'Creating...' : 'Create Quotation'}
-              </button>
-            </div>
-          </form>
-        </div>
+          {/* Footer Actions */}
+          <div className="bg-gray-50 dark:bg-gray-700/50 px-6 py-4 flex justify-end space-x-3">
+            <Link
+              href="/quotations"
+              className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all"
+            >
+              Cancel
+            </Link>
+            <button
+              type="submit"
+              disabled={loading || !formData.customerId}
+              className="inline-flex items-center px-6 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            >
+              {loading ? (
+                <>
+                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Creating...
+                </>
+              ) : (
+                <>
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                  Create Quotation
+                </>
+              )}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
