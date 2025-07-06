@@ -2,11 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AppLayout from "@/components/AppLayout";
-
-// Development console error filter (only in development)
-if (process.env.NODE_ENV === 'development') {
-  import("@/lib/dev-console-filter");
-}
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,7 +29,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AppLayout>{children}</AppLayout>
+        <ErrorBoundary>
+          <AppLayout>{children}</AppLayout>
+        </ErrorBoundary>
       </body>
     </html>
   );
