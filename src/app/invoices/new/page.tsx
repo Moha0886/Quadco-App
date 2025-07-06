@@ -43,7 +43,7 @@ interface LineItem {
 function NewInvoiceForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const quotationId = searchParams.get('quotationId');
+  const quotationId = searchParams?.get('quotationId');
   
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [products, setProducts] = useState<Product[]>([]);

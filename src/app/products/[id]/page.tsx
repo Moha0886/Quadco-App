@@ -25,16 +25,16 @@ export default function ProductViewPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (params.id) {
+    if (params?.id) {
       fetchProduct();
     }
-  }, [params.id]);
+  }, [params?.id]);
 
   const fetchProduct = async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch(`/api/products/${params.id}`);
+      const response = await fetch(`/api/products/${params?.id}`);
       if (!response.ok) {
         throw new Error('Failed to fetch product');
       }

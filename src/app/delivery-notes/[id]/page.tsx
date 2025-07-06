@@ -54,16 +54,16 @@ export default function DeliveryNoteViewPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (params.id) {
+    if (params?.id) {
       fetchDeliveryNote();
     }
-  }, [params.id]);
+  }, [params?.id]);
 
   const fetchDeliveryNote = async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch(`/api/delivery-notes/${params.id}`);
+      const response = await fetch(`/api/delivery-notes/${params?.id}`);
       if (!response.ok) {
         throw new Error('Failed to fetch delivery note');
       }

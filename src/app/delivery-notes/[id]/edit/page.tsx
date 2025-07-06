@@ -102,7 +102,7 @@ export default function EditDeliveryNotePage() {
 
   const fetchDeliveryNote = async () => {
     try {
-      const response = await fetch(`/api/delivery-notes/${params.id}`);
+      const response = await fetch(`/api/delivery-notes/${params?.id}`);
       if (!response.ok) {
         throw new Error('Failed to fetch delivery note');
       }
@@ -234,7 +234,7 @@ export default function EditDeliveryNotePage() {
         }))
       };
 
-      const response = await fetch(`/api/delivery-notes/${params.id}`, {
+      const response = await fetch(`/api/delivery-notes/${params?.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -246,7 +246,7 @@ export default function EditDeliveryNotePage() {
         throw new Error('Failed to update delivery note');
       }
 
-      router.push(`/delivery-notes/${params.id}`);
+      router.push(`/delivery-notes/${params?.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
@@ -301,7 +301,7 @@ export default function EditDeliveryNotePage() {
             </p>
           </div>
           <Link
-            href={`/delivery-notes/${params.id}`}
+            href={`/delivery-notes/${params?.id}`}
             className="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors"
           >
             Cancel
@@ -509,7 +509,7 @@ export default function EditDeliveryNotePage() {
           {/* Submit Button */}
           <div className="flex justify-end space-x-4">
             <Link
-              href={`/delivery-notes/${params.id}`}
+              href={`/delivery-notes/${params?.id}`}
               className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
             >
               Cancel

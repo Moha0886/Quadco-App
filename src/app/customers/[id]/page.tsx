@@ -27,16 +27,16 @@ export default function CustomerViewPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (params.id) {
+    if (params?.id) {
       fetchCustomer();
     }
-  }, [params.id]);
+  }, [params?.id]);
 
   const fetchCustomer = async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch(`/api/customers/${params.id}`);
+      const response = await fetch(`/api/customers/${params?.id}`);
       if (!response.ok) {
         throw new Error('Failed to fetch customer');
       }

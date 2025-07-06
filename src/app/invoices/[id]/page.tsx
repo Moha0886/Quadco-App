@@ -58,16 +58,16 @@ export default function InvoiceViewPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (params.id) {
+    if (params?.id) {
       fetchInvoice();
     }
-  }, [params.id]);
+  }, [params?.id]);
 
   const fetchInvoice = async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch(`/api/invoices/${params.id}`);
+      const response = await fetch(`/api/invoices/${params?.id}`);
       if (!response.ok) {
         throw new Error('Failed to fetch invoice');
       }

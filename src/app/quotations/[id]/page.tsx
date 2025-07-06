@@ -39,16 +39,16 @@ export default function QuotationViewPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (params.id) {
+    if (params?.id) {
       fetchQuotation();
     }
-  }, [params.id]);
+  }, [params?.id]);
 
   const fetchQuotation = async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch(`/api/quotations/${params.id}`);
+      const response = await fetch(`/api/quotations/${params?.id}`);
       if (!response.ok) {
         throw new Error('Failed to fetch quotation');
       }

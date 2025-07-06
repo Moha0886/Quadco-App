@@ -38,7 +38,7 @@ interface SidebarProps {
 
 export default function Sidebar({ children }: SidebarProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const pathname = usePathname();
+  const pathname = usePathname() || "";
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">

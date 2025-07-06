@@ -7,7 +7,7 @@ export async function GET(
 ) {
   try {
     const params = await context.params;
-    const id = params.id;
+    const id = params?.id;
 
     const quotation = await prisma.quotation.findUnique({
       where: { id },
@@ -65,7 +65,7 @@ export async function PUT(
 ) {
   try {
     const params = await context.params;
-    const id = params.id;
+    const id = params?.id;
     const body = await request.json();
     const {
       title,
@@ -146,7 +146,7 @@ export async function DELETE(
 ) {
   try {
     const params = await context.params;
-    const id = params.id;
+    const id = params?.id;
 
     // Check if quotation exists
     const existingQuotation = await prisma.quotation.findUnique({

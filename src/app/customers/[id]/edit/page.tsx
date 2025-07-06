@@ -15,7 +15,7 @@ interface Customer {
 export default function CustomerEditPage() {
   const params = useParams();
   const router = useRouter();
-  const customerId = params.id as string;
+  const customerId = params?.id as string;
   
   const [customer, setCustomer] = useState<Customer | null>(null);
   const [loading, setLoading] = useState(true);

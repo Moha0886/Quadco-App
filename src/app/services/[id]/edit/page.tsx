@@ -22,7 +22,7 @@ interface Service {
 export default function ServiceEditPage() {
   const params = useParams();
   const router = useRouter();
-  const serviceId = params.id as string;
+  const serviceId = params?.id as string;
   
   const [service, setService] = useState<Service | null>(null);
   const [categories, setCategories] = useState<ServiceCategory[]>([]);
