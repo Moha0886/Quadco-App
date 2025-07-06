@@ -30,22 +30,25 @@ export default function CustomersPage() {
       const response = await fetch('/api/customers');
       if (response.ok) {
         const data = await response.json();
-        setCustomers(data);
+        // API returns { customers: [...] }, so we need to access data.customers
+        setCustomers(data.customers || []);
       } else {
         console.error('Failed to fetch customers');
+        setCustomers([]);
       }
     } catch (error) {
       console.error('Error fetching customers:', error);
+      setCustomers([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const filteredCustomers = customers.filter(customer =>
-    customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    customer.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  const filteredCustomers = Array.isArray(customers) ? customers.filter(customer =>
+    customer.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    customer.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     (customer.contactPerson && customer.contactPerson.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  ) : [];
 
   if (loading) {
     return (

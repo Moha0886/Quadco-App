@@ -1,0 +1,16 @@
+{
+  "build": {
+    "command": "npm run build"
+  },
+  "start": {
+    "command": "npm start"
+  },
+  "environment": {
+    "NODE_VERSION": "22",
+    "NPM_CONFIG_PRODUCTION": "false"
+  },
+  "healthcheck": {
+    "path": "/api/test",
+    "timeout": 30
+  }
+}

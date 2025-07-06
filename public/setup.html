@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quadco App Database Setup</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .setup-form { background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .button { background: #0070f3; color: white; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; }
+        .button:hover { background: #0051cc; }
+        .result { margin-top: 20px; padding: 15px; border-radius: 6px; white-space: pre-wrap; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+    </style>
+</head>
+<body>
+    <h1>🚀 Quadco App Database Setup</h1>
+    
+    <div class="info">
+        <strong>What this does:</strong><br>
+        • Creates an admin user for login<br>
+        • Adds sample customers, products, and services<br>
+        • Initializes all necessary data for the app
+    </div>
+
+    <div class="setup-form">
+        <h3>Step 1: Test Database Connection</h3>
+        <button class="button" onclick="testConnection()">Test Connection</button>
+        
+        <h3>Step 2: Initialize Database</h3>
+        <button class="button" onclick="setupDatabase()">Setup Database</button>
+        
+        <h3>Step 3: Test Login</h3>
+        <button class="button" onclick="testLogin()">Test Login</button>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        function showResult(data, type = 'info') {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = `result ${type}`;
+            resultDiv.textContent = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+        }
+
+        async function testConnection() {
+            try {
+                showResult('Testing database connection...', 'info');
+                const response = await fetch('/api/test');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('✅ Connection successful!\n\n' + JSON.stringify(data, null, 2), 'success');
+                } else {
+                    showResult('❌ Connection failed!\n\n' + JSON.stringify(data, null, 2), 'error');
+                }
+            } catch (error) {
+                showResult('❌ Connection error: ' + error.message, 'error');
+            }
+        }
+
+        async function setupDatabase() {
+            try {
+                showResult('Setting up database...', 'info');
+                const response = await fetch('/api/setup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    showResult('✅ Database setup successful!\n\n' + 
+                              'Admin Login:\n' + 
+                              'Email: ' + data.adminCredentials.email + '\n' + 
+                              'Password: ' + data.adminCredentials.password + '\n\n' + 
+                              JSON.stringify(data, null, 2), 'success');
+                } else {
+                    showResult('❌ Setup failed!\n\n' + JSON.stringify(data, null, 2), 'error');
+                }
+            } catch (error) {
+                showResult('❌ Setup error: ' + error.message, 'error');
+            }
+        }
+
+        async function testLogin() {
+            try {
+                showResult('Testing login...', 'info');
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: 'admin@quadco.com',
+                        password: 'admin123'
+                    })
+                });
+                const data = await response.json();
+                
+                if (response.ok && data.token) {
+                    showResult('✅ Login successful!\n\n' + 
+                              'You can now access the app at:\n' + 
+                              window.location.origin + '/login\n\n' + 
+                              JSON.stringify(data, null, 2), 'success');
+                } else {
+                    showResult('❌ Login failed!\n\n' + JSON.stringify(data, null, 2), 'error');
+                }
+            } catch (error) {
+                showResult('❌ Login error: ' + error.message, 'error');
+            }
+        }
+    </script>
+</body>
+</html>

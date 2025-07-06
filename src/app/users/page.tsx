@@ -50,13 +50,13 @@ export default function UsersPage() {
   const roles = ['All', 'Super Admin', 'Manager', 'Employee'];
   const statuses = ['All', 'Active', 'Inactive'];
 
-  const filteredUsers = users.filter(user => {
-    const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         user.email.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredUsers = Array.isArray(users) ? users.filter(user => {
+    const matchesSearch = user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         user.email?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesRole = selectedRole === 'All' || user.role === selectedRole;
     const matchesStatus = selectedStatus === 'All' || user.status === selectedStatus;
     return matchesSearch && matchesRole && matchesStatus;
-  });
+  }) : [];
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -75,9 +75,9 @@ export default function UsersPage() {
     }
   };
 
-  const totalUsers = users.length;
-  const activeUsers = users.filter(u => u.status === 'Active').length;
-  const adminUsers = users.filter(u => u.role === 'Super Admin').length;
+  const totalUsers = Array.isArray(users) ? users.length : 0;
+  const activeUsers = Array.isArray(users) ? users.filter(u => u.status === 'Active').length : 0;
+  const adminUsers = Array.isArray(users) ? users.filter(u => u.role === 'Super Admin').length : 0;
 
   return (
     <div className="container mx-auto px-4 py-8">

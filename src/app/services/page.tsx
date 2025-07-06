@@ -4,16 +4,16 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 interface Service {
-  id: number;
+  id: string;
   name: string;
   description?: string;
   basePrice: number;
   unit: string;
-  categoryId?: number;
+  categoryId?: string;
   createdAt: string;
   updatedAt: string;
   category: {
-    id: number;
+    id: string;
     name: string;
   } | null;
   _count: {
@@ -50,16 +50,16 @@ export default function ServicesPage() {
 
   const categories = ['All', 'Technology', 'Consulting', 'Marketing', 'Design', 'Support'];
 
-  const filteredServices = services.filter(service => {
-    const matchesSearch = service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  const filteredServices = Array.isArray(services) ? services.filter(service => {
+    const matchesSearch = service.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          (service.description && service.description.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesCategory = selectedCategory === 'All' || 
                            (service.category && service.category.name === selectedCategory);
     return matchesSearch && matchesCategory;
-  });
+  }) : [];
 
-  const totalServices = services.length;
-  const activeServices = services.length; // All services are considered active for now
+  const totalServices = Array.isArray(services) ? services.length : 0;
+  const activeServices = Array.isArray(services) ? services.length : 0; // All services are considered active for now
 
   if (loading) {
     return (
@@ -180,7 +180,7 @@ export default function ServicesPage() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Avg. Price</p>
-                <p className="text-2xl font-bold text-gray-900">₦{services.length > 0 ? Math.round(services.reduce((sum, s) => sum + s.basePrice, 0) / services.length).toLocaleString() : '0'}</p>
+                <p className="text-2xl font-bold text-gray-900">₦{Array.isArray(services) && services.length > 0 ? Math.round(services.reduce((sum, s) => sum + s.basePrice, 0) / services.length).toLocaleString() : '0'}</p>
               </div>
             </div>
           </div>
@@ -233,7 +233,7 @@ export default function ServicesPage() {
                 
                 <div className="flex justify-between items-center mb-4">
                   <div>
-                    <p className="text-2xl font-bold text-gray-900">₦{service.basePrice.toLocaleString()}</p>
+                    <p className="text-2xl font-bold text-gray-900">₦{service.basePrice?.toLocaleString() || '0.00'}</p>
                     <p className="text-sm text-gray-500">per {service.unit}</p>
                   </div>
                 </div>

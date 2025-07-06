@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export async function GET(_request: Request) {
   try {
@@ -48,7 +46,7 @@ export async function GET(_request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { customerId, invoiceId, notes } = body;
+    const { customerId, invoiceId, notes, lineItems } = body;
 
     if (!customerId) {
       return NextResponse.json(
@@ -81,6 +79,12 @@ export async function POST(request: Request) {
             email: true,
           },
         },
+        lineItems: {
+          include: {
+            product: true,
+            service: true
+          }
+        },
         _count: {
           select: {
             lineItems: true,
@@ -88,6 +92,51 @@ export async function POST(request: Request) {
         },
       },
     });
+
+    // Add line items if provided
+    if (lineItems && lineItems.length > 0) {
+      await prisma.lineItem.createMany({
+        data: lineItems.map((item: any) => ({
+          itemType: item.itemType,
+          productId: item.productId || null,
+          serviceId: item.serviceId || null,
+          documentId: deliveryNote.id,
+          documentType: 'DELIVERY_NOTE',
+          deliveryNoteId: deliveryNote.id,
+          description: item.description,
+          quantity: parseFloat(item.quantity),
+          unitPrice: parseFloat(item.unitPrice),
+          total: parseFloat(item.total)
+        }))
+      });
+
+      // Fetch the updated delivery note with line items
+      const updatedDeliveryNote = await prisma.deliveryNote.findUnique({
+        where: { id: deliveryNote.id },
+        include: {
+          customer: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+          lineItems: {
+            include: {
+              product: true,
+              service: true
+            }
+          },
+          _count: {
+            select: {
+              lineItems: true,
+            },
+          },
+        },
+      });
+
+      return NextResponse.json({ deliveryNote: updatedDeliveryNote }, { status: 201 });
+    }
 
     return NextResponse.json({ deliveryNote }, { status: 201 });
   } catch (error) {

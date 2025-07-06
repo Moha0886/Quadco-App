@@ -80,8 +80,8 @@ export default function PermissionsPage() {
   const categories = ['All', 'Customer Management', 'Reporting', 'User Management', 'Financial'];
 
   const filteredPermissions = permissions.filter(permission => {
-    const matchesSearch = permission.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         permission.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = permission.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         permission.description?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || permission.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });

@@ -49,8 +49,8 @@ export default function ProductsPage() {
   const categories = ['All', 'Software', 'Service', 'Hardware', 'Consulting'];
 
   const filteredProducts = products.filter(product => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         product.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = product.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         product.description?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
@@ -103,7 +103,7 @@ export default function ProductsPage() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Total Value</p>
-                <p className="text-2xl font-bold text-gray-900">₦{totalValue.toLocaleString()}</p>
+                <p className="text-2xl font-bold text-gray-900">₦{(totalValue || 0).toLocaleString()}</p>
               </div>
             </div>
           </div>
@@ -170,7 +170,7 @@ export default function ProductsPage() {
                 
                 <div className="flex justify-between items-center mb-4">
                   <div>
-                    <p className="text-2xl font-bold text-gray-900">₦{product.price.toLocaleString()}</p>
+                    <p className="text-2xl font-bold text-gray-900">₦{product.price?.toLocaleString() || '0.00'}</p>
                     <p className="text-sm text-gray-500">per {product.unit}</p>
                   </div>
                 </div>

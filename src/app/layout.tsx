@@ -3,6 +3,11 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AppLayout from "@/components/AppLayout";
 
+// Development console error filter (only in development)
+if (process.env.NODE_ENV === 'development') {
+  import("@/lib/dev-console-filter");
+}
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

@@ -4,18 +4,18 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 interface Quotation {
-  id: number;
-  quotationNumber: string;
-  title: string;
+  id: string;
+  quotationNumber?: string;
+  title?: string;
   description?: string;
   status: string;
-  customerId: number;
-  totalAmount: number;
-  validUntil: string;
+  customerId: string;
+  total: number;
+  validUntil: string | null;
   createdAt: string;
   updatedAt: string;
   customer: {
-    id: number;
+    id: string;
     name: string;
     email: string;
   };
@@ -52,28 +52,55 @@ export default function QuotationsPage() {
     }
   };
 
-  const statuses = ['All', 'Draft', 'Sent', 'Accepted', 'Rejected', 'Expired'];
+  const convertToInvoice = async (quotationId: string) => {
+    try {
+      setLoading(true);
+      const response = await fetch(`/api/quotations/${quotationId}/convert-to-invoice`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-  const filteredQuotations = quotations.filter(quotation => {
-    const matchesSearch = quotation.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         quotation.quotationNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         quotation.customer.name.toLowerCase().includes(searchTerm.toLowerCase());
+      if (response.ok) {
+        const result = await response.json();
+        // Show success message and redirect to invoice
+        alert('Quotation successfully converted to invoice!');
+        window.location.href = `/invoices/${result.invoice.id}`;
+      } else {
+        const error = await response.json();
+        alert(`Error: ${error.error || 'Failed to convert quotation'}`);
+      }
+    } catch (error) {
+      console.error('Error converting quotation:', error);
+      alert('An error occurred while converting the quotation');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const statuses = ['All', 'DRAFT', 'SENT', 'ACCEPTED', 'REJECTED', 'EXPIRED'];
+
+  const filteredQuotations = Array.isArray(quotations) ? quotations.filter(quotation => {
+    const matchesSearch = quotation.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         quotation.quotationNumber?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         quotation.customer?.name?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = selectedStatus === 'All' || quotation.status === selectedStatus;
     return matchesSearch && matchesStatus;
-  });
+  }) : [];
 
-  const totalQuotations = quotations.length;
-  const pendingQuotations = quotations.filter(q => q.status === 'Sent').length;
-  const acceptedQuotations = quotations.filter(q => q.status === 'Accepted').length;
-  const totalValue = quotations.reduce((sum, q) => sum + q.totalAmount, 0);
+  const totalQuotations = Array.isArray(quotations) ? quotations.length : 0;
+  const pendingQuotations = Array.isArray(quotations) ? quotations.filter(q => q.status === 'Sent').length : 0;
+  const acceptedQuotations = Array.isArray(quotations) ? quotations.filter(q => q.status === 'Accepted').length : 0;
+  const totalValue = Array.isArray(quotations) ? quotations.reduce((sum, q) => sum + (q.total || 0), 0) : 0;
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Draft': return 'bg-gray-100 text-gray-800';
-      case 'Sent': return 'bg-blue-100 text-blue-800';
-      case 'Accepted': return 'bg-green-100 text-green-800';
-      case 'Rejected': return 'bg-red-100 text-red-800';
-      case 'Expired': return 'bg-yellow-100 text-yellow-800';
+      case 'DRAFT': return 'bg-gray-100 text-gray-800';
+      case 'SENT': return 'bg-blue-100 text-blue-800';
+      case 'ACCEPTED': return 'bg-green-100 text-green-800';
+      case 'REJECTED': return 'bg-red-100 text-red-800';
+      case 'EXPIRED': return 'bg-yellow-100 text-yellow-800';
       default: return 'bg-gray-100 text-gray-800';
     }
   };
@@ -186,7 +213,7 @@ export default function QuotationsPage() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Total Value</p>
-                <p className="text-2xl font-bold text-gray-900">₦{totalValue.toLocaleString()}</p>
+                <p className="text-2xl font-bold text-gray-900">₦{(totalValue || 0).toLocaleString()}</p>
               </div>
             </div>
           </div>
@@ -259,8 +286,8 @@ export default function QuotationsPage() {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{quotation.customer.name}</div>
-                      <div className="text-sm text-gray-500">{quotation.customer.email}</div>
+                      <div className="text-sm text-gray-900">{quotation.customer?.name || 'N/A'}</div>
+                      <div className="text-sm text-gray-500">{quotation.customer?.email || 'N/A'}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(quotation.status)}`}>
@@ -268,13 +295,13 @@ export default function QuotationsPage() {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      ₦{quotation.totalAmount.toLocaleString()}
+                      ₦{quotation.total?.toLocaleString() || '0.00'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {new Date(quotation.validUntil).toLocaleDateString()}
+                      {quotation.validUntil ? new Date(quotation.validUntil).toLocaleDateString() : 'No expiry date'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {quotation._count.lineItems} items
+                      {quotation._count?.lineItems || 0} items
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex space-x-2">
@@ -290,6 +317,22 @@ export default function QuotationsPage() {
                         >
                           Edit
                         </Link>
+                        {quotation.status !== 'ACCEPTED' && (
+                          <>
+                            <Link
+                              href={`/invoices/new?quotationId=${quotation.id}`}
+                              className="text-purple-600 hover:text-purple-900"
+                            >
+                              Create Invoice
+                            </Link>
+                            <button
+                              onClick={() => convertToInvoice(quotation.id)}
+                              className="text-green-600 hover:text-green-900"
+                            >
+                              Quick Convert
+                            </button>
+                          </>
+                        )}
                       </div>
                     </td>
                   </tr>

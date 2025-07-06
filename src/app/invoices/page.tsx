@@ -4,19 +4,19 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 interface Invoice {
-  id: number;
+  id: string;
   invoiceNumber: string;
-  customerId: number;
-  quotationId?: number;
-  totalAmount: number;
+  customerId: string;
+  quotationId?: string;
+  total: number;
   taxAmount: number;
   status: string;
   issueDate: string;
-  dueDate: string;
+  dueDate: string | null;
   createdAt: string;
   updatedAt: string;
   customer: {
-    id: number;
+    id: string;
     name: string;
     email: string;
   };
@@ -25,8 +25,25 @@ interface Invoice {
   };
 }
 
+interface PaginationInfo {
+  page: number;
+  limit: number;
+  totalCount: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+}
+
 export default function InvoicesPage() {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [pagination, setPagination] = useState<PaginationInfo>({
+    page: 1,
+    limit: 10,
+    totalCount: 0,
+    totalPages: 0,
+    hasNextPage: false,
+    hasPreviousPage: false,
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -34,18 +51,33 @@ export default function InvoicesPage() {
 
   useEffect(() => {
     fetchInvoices();
-  }, []);
+  }, [pagination.page, searchTerm, selectedStatus]);
 
   const fetchInvoices = async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch('/api/invoices');
+      
+      const params = new URLSearchParams({
+        page: pagination.page.toString(),
+        limit: pagination.limit.toString(),
+      });
+      
+      if (searchTerm) {
+        params.append('search', searchTerm);
+      }
+      
+      if (selectedStatus && selectedStatus !== 'All') {
+        params.append('status', selectedStatus);
+      }
+      
+      const response = await fetch(`/api/invoices?${params}`);
       if (!response.ok) {
         throw new Error('Failed to fetch invoices');
       }
       const data = await response.json();
       setInvoices(data.invoices || []);
+      setPagination(data.pagination || pagination);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
@@ -53,31 +85,38 @@ export default function InvoicesPage() {
     }
   };
 
-  const statuses = ['All', 'Draft', 'Sent', 'Paid', 'Overdue', 'Cancelled'];
+  const statuses = ['All', 'DRAFT', 'SENT', 'PAID', 'PARTIALLY_PAID', 'OVERDUE', 'CANCELLED'];
 
-  const filteredInvoices = invoices.filter(invoice => {
-    const matchesSearch = invoice.invoiceNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         invoice.customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         invoice.customer.email.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = selectedStatus === 'All' || invoice.status === selectedStatus;
-    return matchesSearch && matchesStatus;
-  });
+  const handleSearch = (term: string) => {
+    setSearchTerm(term);
+    setPagination(prev => ({ ...prev, page: 1 })); // Reset to first page when searching
+  };
+
+  const handleStatusChange = (status: string) => {
+    setSelectedStatus(status);
+    setPagination(prev => ({ ...prev, page: 1 })); // Reset to first page when filtering
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setPagination(prev => ({ ...prev, page: newPage }));
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Draft': return 'bg-gray-100 text-gray-800';
-      case 'Sent': return 'bg-blue-100 text-blue-800';
-      case 'Paid': return 'bg-green-100 text-green-800';
-      case 'Overdue': return 'bg-red-100 text-red-800';
-      case 'Cancelled': return 'bg-gray-100 text-gray-800';
+      case 'DRAFT': return 'bg-gray-100 text-gray-800';
+      case 'SENT': return 'bg-blue-100 text-blue-800';
+      case 'PAID': return 'bg-green-100 text-green-800';
+      case 'PARTIALLY_PAID': return 'bg-yellow-100 text-yellow-800';
+      case 'OVERDUE': return 'bg-red-100 text-red-800';
+      case 'CANCELLED': return 'bg-gray-100 text-gray-800';
       default: return 'bg-gray-100 text-gray-800';
     }
   };
 
-  const totalAmount = invoices.reduce((sum, invoice) => sum + invoice.totalAmount, 0);
-  const paidAmount = invoices.filter(inv => inv.status === 'Paid').reduce((sum, invoice) => sum + invoice.totalAmount, 0);
-  const pendingAmount = invoices.filter(inv => inv.status === 'Sent').reduce((sum, invoice) => sum + invoice.totalAmount, 0);
-  const overdueCount = invoices.filter(inv => inv.status === 'Overdue').length;
+  const totalAmount = Array.isArray(invoices) ? invoices.reduce((sum, invoice) => sum + (invoice.total || 0), 0) : 0;
+  const paidAmount = Array.isArray(invoices) ? invoices.filter(inv => inv.status === 'PAID').reduce((sum, invoice) => sum + (invoice.total || 0), 0) : 0;
+  const pendingAmount = Array.isArray(invoices) ? invoices.filter(inv => inv.status === 'SENT').reduce((sum, invoice) => sum + (invoice.total || 0), 0) : 0;
+  const overdueCount = Array.isArray(invoices) ? invoices.filter(inv => inv.status === 'OVERDUE').length : 0;
 
   if (loading) {
     return (
@@ -145,7 +184,7 @@ export default function InvoicesPage() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Total Revenue</p>
-                <p className="text-2xl font-bold text-gray-900">₦{totalAmount.toLocaleString()}</p>
+                <p className="text-2xl font-bold text-gray-900">₦{(totalAmount || 0).toLocaleString()}</p>
               </div>
             </div>
           </div>
@@ -159,7 +198,7 @@ export default function InvoicesPage() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Paid</p>
-                <p className="text-2xl font-bold text-gray-900">₦{paidAmount.toLocaleString()}</p>
+                <p className="text-2xl font-bold text-gray-900">₦{(paidAmount || 0).toLocaleString()}</p>
               </div>
             </div>
           </div>
@@ -173,7 +212,7 @@ export default function InvoicesPage() {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Pending</p>
-                <p className="text-2xl font-bold text-gray-900">₦{pendingAmount.toLocaleString()}</p>
+                <p className="text-2xl font-bold text-gray-900">₦{(pendingAmount || 0).toLocaleString()}</p>
               </div>
             </div>
           </div>
@@ -189,6 +228,41 @@ export default function InvoicesPage() {
                 <p className="text-sm font-medium text-gray-600">Overdue</p>
                 <p className="text-2xl font-bold text-gray-900">{overdueCount}</p>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Search and Filter Section */}
+        <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1">
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search invoices by customer name or email..."
+                  value={searchTerm}
+                  onChange={(e) => handleSearch(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+            </div>
+            <div className="md:w-48">
+              <select
+                value={selectedStatus}
+                onChange={(e) => handleStatusChange(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                {statuses.map(status => (
+                  <option key={status} value={status}>
+                    {status === 'All' ? 'All Statuses' : status}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
         </div>
@@ -224,18 +298,18 @@ export default function InvoicesPage() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {filteredInvoices.map((invoice) => (
+                {invoices.map((invoice) => (
                   <tr key={invoice.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900">{invoice.invoiceNumber}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{invoice.customer.name}</div>
-                      <div className="text-sm text-gray-500">{invoice.customer.email}</div>
+                      <div className="text-sm text-gray-900">{invoice.customer?.name || 'N/A'}</div>
+                      <div className="text-sm text-gray-500">{invoice.customer?.email || 'N/A'}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">₦{invoice.totalAmount.toLocaleString()}</div>
-                      <div className="text-sm text-gray-500">Tax: ₦{invoice.taxAmount.toLocaleString()}</div>
+                      <div className="text-sm text-gray-900">₦{invoice.total?.toLocaleString() || '0.00'}</div>
+                      <div className="text-sm text-gray-500">Tax: ₦{invoice.taxAmount?.toLocaleString() || '0.00'}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(invoice.status)}`}>
@@ -243,7 +317,7 @@ export default function InvoicesPage() {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {new Date(invoice.dueDate).toLocaleDateString()}
+                      {invoice.dueDate ? new Date(invoice.dueDate).toLocaleDateString() : 'No due date'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex space-x-3">
@@ -262,7 +336,7 @@ export default function InvoicesPage() {
           </div>
         </div>
 
-        {filteredInvoices.length === 0 && !loading && (
+        {invoices.length === 0 && !loading && (
           <div className="text-center py-12">
             <div className="text-gray-400 mb-4">
               <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -277,6 +351,51 @@ export default function InvoicesPage() {
             >
               Create Your First Invoice
             </Link>
+          </div>
+        )}
+        
+        {/* Pagination */}
+        {pagination.totalPages > 1 && (
+          <div className="bg-white rounded-lg shadow-sm border p-6 mt-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <span className="text-sm text-gray-700">
+                  Showing {((pagination.page - 1) * pagination.limit) + 1} to {Math.min(pagination.page * pagination.limit, pagination.totalCount)} of {pagination.totalCount} invoices
+                </span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() => handlePageChange(pagination.page - 1)}
+                  disabled={!pagination.hasPreviousPage}
+                  className="px-3 py-1 text-sm text-gray-600 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Previous
+                </button>
+                
+                {/* Page numbers */}
+                {Array.from({ length: pagination.totalPages }, (_, i) => i + 1).map(pageNum => (
+                  <button
+                    key={pageNum}
+                    onClick={() => handlePageChange(pageNum)}
+                    className={`px-3 py-1 text-sm rounded-md ${
+                      pageNum === pagination.page
+                        ? 'bg-blue-600 text-white'
+                        : 'text-gray-600 bg-white border border-gray-300 hover:bg-gray-50'
+                    }`}
+                  >
+                    {pageNum}
+                  </button>
+                ))}
+                
+                <button
+                  onClick={() => handlePageChange(pagination.page + 1)}
+                  disabled={!pagination.hasNextPage}
+                  className="px-3 py-1 text-sm text-gray-600 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>

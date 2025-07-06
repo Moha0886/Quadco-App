@@ -52,12 +52,12 @@ export default function DeliveryNotesPage() {
     }
   };
 
-  const filteredDeliveryNotes = deliveryNotes.filter(note => {
-    const matchesSearch = note.deliveryNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         note.customer.name.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredDeliveryNotes = Array.isArray(deliveryNotes) ? deliveryNotes.filter(note => {
+    const matchesSearch = note.deliveryNumber?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         note.customer?.name?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = selectedStatus === 'All' || note.status === selectedStatus;
     return matchesSearch && matchesStatus;
-  });
+  }) : [];
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -242,8 +242,8 @@ export default function DeliveryNotesPage() {
                           {note.deliveryNumber}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">{note.customer.name}</div>
-                          <div className="text-sm text-gray-500">{note.customer.email}</div>
+                          <div className="text-sm text-gray-900">{note.customer?.name || 'N/A'}</div>
+                          <div className="text-sm text-gray-500">{note.customer?.email || 'N/A'}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                           {formatDate(note.date)}
@@ -254,7 +254,7 @@ export default function DeliveryNotesPage() {
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {note._count.lineItems} items
+                          {note._count?.lineItems || 0} items
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <Link
@@ -293,7 +293,7 @@ export default function DeliveryNotesPage() {
               <div className="ml-5 w-0 flex-1">
                 <dl>
                   <dt className="text-sm font-medium text-gray-500 truncate">Total Delivery Notes</dt>
-                  <dd className="text-lg font-medium text-gray-900">{deliveryNotes.length}</dd>
+                  <dd className="text-lg font-medium text-gray-900">{Array.isArray(deliveryNotes) ? deliveryNotes.length : 0}</dd>
                 </dl>
               </div>
             </div>
@@ -312,7 +312,7 @@ export default function DeliveryNotesPage() {
                 <dl>
                   <dt className="text-sm font-medium text-gray-500 truncate">Delivered</dt>
                   <dd className="text-lg font-medium text-gray-900">
-                    {deliveryNotes.filter(note => note.status === 'DELIVERED').length}
+                    {Array.isArray(deliveryNotes) ? deliveryNotes.filter(note => note.status === 'DELIVERED').length : 0}
                   </dd>
                 </dl>
               </div>
@@ -332,7 +332,7 @@ export default function DeliveryNotesPage() {
                 <dl>
                   <dt className="text-sm font-medium text-gray-500 truncate">Pending</dt>
                   <dd className="text-lg font-medium text-gray-900">
-                    {deliveryNotes.filter(note => note.status === 'PENDING').length}
+                    {Array.isArray(deliveryNotes) ? deliveryNotes.filter(note => note.status === 'PENDING').length : 0}
                   </dd>
                 </dl>
               </div>
