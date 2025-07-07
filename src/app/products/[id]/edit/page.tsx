@@ -17,7 +17,7 @@ interface Product {
 
 export default function ProductEditPage() {
   const params = useParams();
-  const 
+  const router = useRouter();
   const productId = params?.id as string;
   
   const [product, setProduct] = useState<Product | null>(null);

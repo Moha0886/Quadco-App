@@ -21,7 +21,7 @@ interface Service {
 
 export default function ServiceEditPage() {
   const params = useParams();
-  const 
+  const router = useRouter();
   const serviceId = params?.id as string;
   
   const [service, setService] = useState<Service | null>(null);

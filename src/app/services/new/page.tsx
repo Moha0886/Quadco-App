@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function NewServicePage() {
-  const 
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',

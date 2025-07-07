@@ -11,7 +11,7 @@ interface Role {
 }
 
 export default function NewUserPage() {
-  const 
+  const router = useRouter();
   const [roles, setRoles] = useState<Role[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadingRoles, setLoadingRoles] = useState(true);

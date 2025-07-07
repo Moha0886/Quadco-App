@@ -19,7 +19,7 @@ interface Product {
 
 export default function ProductViewPage() {
   const params = useParams();
-  const 
+  const router = useRouter();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

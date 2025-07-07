@@ -60,7 +60,7 @@ interface Service {
 }
 
 export default function EditDeliveryNotePage() {
-  const 
+  const router = useRouter();
   const params = useParams();
   const [deliveryNote, setDeliveryNote] = useState<DeliveryNote | null>(null);
   const [customers, setCustomers] = useState<Customer[]>([]);

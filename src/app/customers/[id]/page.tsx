@@ -21,7 +21,7 @@ interface Customer {
 
 export default function CustomerViewPage() {
   const params = useParams();
-  const 
+  const router = useRouter();
   const [customer, setCustomer] = useState<Customer | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
