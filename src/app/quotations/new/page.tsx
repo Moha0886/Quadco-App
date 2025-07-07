@@ -46,7 +46,7 @@ export default function NewQuotationPage() {
   const [lineItems, setLineItems] = useState<LineItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const router = useRouter();
+  const 
 
   useEffect(() => {
     // Fetch customers, products, and services

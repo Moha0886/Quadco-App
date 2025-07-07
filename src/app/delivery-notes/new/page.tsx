@@ -58,7 +58,7 @@ export default function NewDeliveryNotePage() {
   const [lineItems, setLineItems] = useState<LineItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const router = useRouter();
+  const 
 
   useEffect(() => {
     // Fetch customers, products, services, and invoices

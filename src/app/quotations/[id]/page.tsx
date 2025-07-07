@@ -33,7 +33,7 @@ interface Quotation {
 
 export default function QuotationViewPage() {
   const params = useParams();
-  const router = useRouter();
+  const 
   const [quotation, setQuotation] = useState<Quotation | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

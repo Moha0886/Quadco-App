@@ -71,7 +71,7 @@ interface Invoice {
 
 export default function EditInvoicePage() {
   const params = useParams();
-  const router = useRouter();
+  const 
   const invoiceId = params?.id as string;
   
   const [customers, setCustomers] = useState<Customer[]>([]);

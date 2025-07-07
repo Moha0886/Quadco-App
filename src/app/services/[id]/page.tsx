@@ -23,7 +23,7 @@ interface Service {
 
 export default function ServiceViewPage() {
   const params = useParams();
-  const router = useRouter();
+  const 
   const [service, setService] = useState<Service | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
